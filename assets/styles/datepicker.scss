@@ -1,0 +1,96 @@
+@import './colors';
+
+$namespace: 'mx' !default;
+
+$default-color: #e6e6e6;
+$primary-color: #63fdd9;
+$primary-color: #3ca38b;
+$green: #21c187;
+
+$today-color: mix(#191c1e, $primary-color, 10%) !default;
+
+$popup-z-index: 2001 !default;
+
+$input-border-color: #263238 !default;
+$input-color: #e6e6e6 !default;
+$input-hover-border-color: #3e464b !default;
+
+$border-color: #263238 !default;
+
+$calendar-active-color: #191c1e !default;
+$calendar-active-background-color: $primary-color !default;
+
+$calendar-hover-color: $default-color !default;
+$calendar-hover-background-color: mix(#191c1e, $calendar-active-background-color, 95%) !default;
+
+$calendar-in-range-color: $default-color !default;
+$calendar-in-range-background-color: mix(#191c1e, $calendar-active-background-color, 85%) !default;
+
+$time-active-color: $primary-color !default;
+$time-active-background-color: transparent !default;
+
+$time-hover-color: $default-color !default;
+$time-hover-background-color: mix(#191c1e, $calendar-active-background-color, 95%) !default;
+
+$input-border-radius: $radius-sm !default;
+$sidebar-margin-left: 100px !default;
+/* Customize the datepicker's appearance */
+@import '~vue2-datepicker/scss/index.scss';
+
+.mx-input {
+    color: var(--sec-font-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color) !important;
+    padding: $space-8;
+    height: 38px;
+}
+
+.mx-datepicker svg {
+    fill: var(--sec-font-color);
+}
+
+.mx-datepicker-main {
+    color: var(--sec-font-color);
+    background-color: var(--bg-color);
+}
+
+[theme='light'] .mx-table-date .cell.not-current-month {
+    color: #e6e6e6;
+}
+[theme='light'] .mx-calendar-content .cell.active{
+    color: #eaeaea;
+    background-color: #00644F;
+}
+
+[theme='light'] .mx-calendar-content .cell.in-range{
+    color: #eaeaea;
+    background-color: #0B836C;
+}
+[theme='dark'] .mx-table-date .cell.not-current-month {
+    color: rgb(99, 99, 99);
+    
+}
+[theme='light'] .mx-calendar-content .cell.in-range:hover{
+    background-color: #0B836C;
+}
+[theme='light'] .mx-calendar-content .cell:hover{
+    background-color: #004435;
+}
+[theme='light'] .mx-btn:hover{
+    color: #0B836C;
+}
+[theme='dark'] .mx-calendar-content .cell.active{
+    color: #191c1e;
+    background-color: #3ca38b;
+}
+[theme='light'] .mx-btn{
+    color: #5c5c5c;
+}
+.mx-datepicker-range {
+    width: 100%;
+}
+.mx-input:disabled, .mx-input.disabled{
+    background-color:  var(--bg-color) !important; 
+    color:  var(--font-color)!important; 
+    cursor: not-allowed !important; 
+}
