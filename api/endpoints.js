@@ -1,11 +1,11 @@
 module.exports = {
   mainnet: {
-    MIDGARD_BASE_URL: 'http://95.217.108.62:8001/v2/',
+    MIDGARD_BASE_URL: 'https://midgard-proxy.odindex.io/v2/',
     MIDGARD_GRAPH_QL: 'https://midgard.ninerealms.com/v2',
     ARCHIVE_THORNODE: 'https://thornode-v1.ninerealms.com/',
-    THORNODE_URL: 'http://95.217.108.62:8002/',
-    TENDERMINT_URL: 'http://95.217.108.62:8003/',
-    SERVER_URL: 'http://95.217.108.62:9050/',
+    THORNODE_URL: 'https://mayanode-proxy.odindex.io/',
+    TENDERMINT_URL: 'https://mayanode-rpc-proxy.odindex.io/',
+    SERVER_URL: 'https://mayachain-explorer-server.odindex.io/',
     MODULE_ADDR: 'maya1dheycdevq39qlkxs2a6wuuzyn4aqxhve4hc8sm',
   },
   stagenet: {
