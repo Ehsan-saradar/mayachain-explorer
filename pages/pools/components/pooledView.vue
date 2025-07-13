@@ -233,7 +233,7 @@ export default {
         poolDatum[period]?.pools.forEach((p) => {
           if (period === 'day') {
             this.totalInfo.pooled +=
-              (+p.endRuneDepth * 2 * this.runePrice) / 1e8
+              (+p.endRuneDepth * 2 * this.runePrice) / 1e10
           }
 
           // Sometimes the earnings are zero
@@ -242,12 +242,15 @@ export default {
           }
 
           this.totalInfo[period].volume +=
-            (+p.swapVolume * this.runePrice) / 1e8
+            (+p.swapVolume * this.runePrice) / 1e10
           this.totalInfo[period].earnings +=
-            (+p.earnings * this.runePrice) / 1e8
+            (+p.earnings * this.runePrice) / 1e10
           this.totalInfo[period].swapCount += +p.swapCount
-          this.totalInfo[period].liquidityFees +=
-            +p.totalLiquidityFeesRune / 1e8
+          //if totalLiquidityFeesRune is not undefined
+          if (p.totalLiquidityFeesRune !== undefined) {
+            this.totalInfo[period].liquidityFees +=
+              +p.totalLiquidityFeesRune / 1e10
+          }
         })
 
         const ve =

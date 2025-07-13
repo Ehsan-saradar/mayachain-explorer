@@ -28,8 +28,9 @@ export function getChurn() {
 }
 
 export function getInfraEarnings(params) {
+  //TODO: Use cache server instead of direct call to midgard
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].MIDGARD_BASE_URL + 'history/earnings', // todo: change MIDGARD_BASE_URL to SERVER_URL
+    endpoints[process.env.NETWORK].MIDGARD_BASE_URL + 'history/earnings',
     {
       params,
     }

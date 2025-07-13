@@ -9,7 +9,13 @@ export function getMimir() {
 }
 export function getDenom() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'cosmos/bank/v1beta1/denoms_metadata'
+    endpoints[process.env.NETWORK].THORNODE_URL +
+      'cosmos/bank/v1beta1/denoms_metadata'
+  )
+}
+export function getOutboundFees() {
+  return $axiosInstace.get(
+    endpoints[process.env.NETWORK].THORNODE_URL + '/thorchain/outbound_fees'
   )
 }
 export function getCodes() {
@@ -135,10 +141,10 @@ export function getAssets() {
   )
 }
 
-export function getSupplyCacao() {
+export function getSupplyRune() {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      'cosmos/bank/v1beta1/supply/cacao'
+      'cosmos/bank/v1beta1/supply/rune'
   )
 }
 export function getSupply() {
@@ -217,7 +223,7 @@ export function getPol() {
 
 export function getRunePool() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/cacaopool'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/runepool'
   )
 }
 

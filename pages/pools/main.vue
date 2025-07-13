@@ -121,7 +121,6 @@ import { mapGetters } from 'vuex'
 import SwapIcon from '~/assets/images/swap.svg?inline'
 import FinanceIcon from '~/assets/images/finance-selected.svg?inline'
 import InterfacesJSON from '~/assets/wallets/index'
-import { tradeToAsset } from '~/utils'
 
 export default {
   components: { SwapIcon, FinanceIcon },
@@ -180,29 +179,9 @@ export default {
           tdClass: 'mono',
         },
         {
-          label: 'Trade Asset Depth',
-          field: 'trading',
-          type: 'number',
-          formatFn: 'number',
-          tdClass: 'mono',
-        },
-        {
-          label: 'RUNEPool Share',
-          field: 'polShare',
-          type: 'number',
-          tdClass: 'mono',
-        },
-        {
           label: 'Volume/Depth',
           field: 'vd',
           type: 'percentage',
-          tdClass: 'mono',
-        },
-        {
-          label: 'Est. Yr. Earnings',
-          field: 'estEarnings',
-          type: 'number',
-          formatFn: this.formattedPrice,
           tdClass: 'mono',
         },
         {
@@ -241,7 +220,7 @@ export default {
     this.loadInterfaces()
     this.updatePool(this.period)
     try {
-      this.runePoolData = await this.$api.getRunePoolsInfo()
+      //this.runePoolData = await this.$api.getRunePoolsInfo()
     } catch (error) {
       console.warn('No runepools')
     }
@@ -257,20 +236,20 @@ export default {
         .then(async ({ data }) => {
           this.pools = data
           const pd = await this.getDVEs()
-          const { data: tradeAssets } = await this.$api.getTradeAssets()
+          //const { data: tradeAssets } = await this.$api.getTradeAssets()
 
           const ps = this.pools.map((p) => {
             const pe = pd?.day.pools.find((e) => e.pool === p.asset)
-            const tradeAsset = tradeAssets.find(
-              (e) => tradeToAsset(e.asset) === p.asset
-            )
+            // const tradeAsset = tradeAssets.find(
+            //   (e) => tradeToAsset(e.asset) === p.asset
+            // )
 
             return {
               status: p.status,
               price: +p.assetPriceUSD,
-              depth: (+p.assetDepth / 10 ** 8) * p.assetPriceUSD,
+              depth: (+p.assetDepth / 10 ** 8) * p.assetPriceUSD * 2,
               apy: p.annualPercentageRate,
-              volume: (+p.volume24h / 10 ** 8) * this.runePrice,
+              volume: (+p.volume24h / 10 ** 10) * this.runePrice,
               vd: +p.volume24h / (+p.assetDepth * +p.assetPrice),
               asset: p.asset,
               saversDepth: +p.saversDepth / 10 ** 8,
@@ -280,14 +259,14 @@ export default {
                     '0.00000'
                   )
                 : 0,
-              earning24hr: pe ? (pe.earnings * this.runePrice) / 10 ** 8 : 0,
+              earning24hr: pe ? (pe.earnings * this.runePrice) / 10 ** 10 : 0,
               estEarnings: pe
-                ? (pe.earnings * this.runePrice * 365) / 10 ** 8
+                ? (pe.earnings * this.runePrice * 365) / 10 ** 10
                 : 0,
               collateral: +p.totalCollateral / 1e8,
               assetDepth: +p.assetDepth / 1e8,
               balances: +p.runeDepth / 1e8,
-              trading: (+tradeAsset?.depth / 1e8) * p.assetPriceUSD,
+              // trading: (+tradeAsset?.depth / 1e8) * p.assetPriceUSD,
             }
           })
           this.sepPools(ps)

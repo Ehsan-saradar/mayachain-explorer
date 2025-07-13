@@ -55,13 +55,14 @@ export function getPoolTxs(poolName, offset = 0, limit = 10) {
 export function getPools(period) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].MIDGARD_BASE_URL +
-      `pools?period=${period ?? '180d'}` // todo: change MIDGARD_BASE_URL to SERVER_URL
+      `pools?period=${period ?? '180d'}`
   )
 }
 
 export function getPoolStats(poolName) {
+  //TODO: Use cache server instead of direct call to midgard
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].SERVER_URL +
+    endpoints[process.env.NETWORK].MIDGARD_BASE_URL +
       `pool/${poolName}/stats?period=all`
   )
 }

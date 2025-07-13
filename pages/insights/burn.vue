@@ -249,7 +249,7 @@ export default {
 
         // get reserve address balance
         const uncirculatedData = await this.$api.getBalance(
-          'maya1dheycdevq39qlkxs2a6wuuzyn4aqxhve4hc8sm'
+          'thor1dheycdevq39qlkxs2a6wuuzyn4aqxhve4qxtxt'
         )
 
         const runeBalance = uncirculatedData.data.result.find(

@@ -58,7 +58,7 @@
         <div class="item-detail">
           <div class="header">Total | Circulating | Burned</div>
           <skeleton-item :loading="loading" class="value">
-            {{ cacaoSupply | number('0a') }} | {{ circulating | number('0a') }} |
+            {{ runeSupply | number('0a') }} | {{ circulating | number('0a') }} |
             {{ totalBurnedRune | number('0a') }}
           </skeleton-item>
         </div>
@@ -119,7 +119,7 @@ export default {
         liquidityAPY: 0,
       },
       totalBurnedRune: 0,
-      cacaoSupply: 0,
+      runeSupply: 0,
     }
   },
   computed: {
@@ -133,7 +133,7 @@ export default {
       )
     },
     circulating() {
-      return +this.cacaoSupply - (+this.network?.totalReserve || 0) / 1e8
+      return +this.runeSupply - (+this.network?.totalReserve || 0) / 1e8
     },
     runeVolume() {
       return (
@@ -157,7 +157,7 @@ export default {
         const { data: dashboardData } = await this.$api.getDashboardData()
         if (dashboardData) {
           this.stats = dashboardData.stats || {}
-          this.cacaoSupply = +dashboardData.cacaoSupply?.amount?.amount / 1e8 || 0
+          this.runeSupply = +dashboardData.runeSupply?.amount?.amount / 1e8 || 0
           this.network = dashboardData.networkData || {}
           this.totalSwap24USD = +dashboardData.stats?.volume24USD || 0
         }

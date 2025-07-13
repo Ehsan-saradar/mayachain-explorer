@@ -234,6 +234,10 @@ export default {
               name: 'Pendulum',
               link: '/network/pendulum',
             },
+            {
+              name: 'Outbound Fees',
+              link: '/network/outbounds',
+            },
           ],
         },
         {
@@ -281,6 +285,10 @@ export default {
           link: '/thorfi',
           submenu: [
             {
+              name: 'TCY',
+              link: '/thorfi/tcy',
+            },
+            {
               name: 'Savers',
               link: '/thorfi/savers',
             },
@@ -305,6 +313,32 @@ export default {
           unicon: 'shieldUnselected',
           icon: 'shieldSelected',
           link: '/vaults',
+        },
+        {
+          name: 'Rujira',
+          unicon: 'chartUnselected',
+          icon: 'chartSelected',
+          link: '/rujira',
+          submenu: [
+            {
+              name: 'Secured Assets',
+              link: '/rujira/secured',
+            },
+            {
+              name: 'Contracts',
+              link: '/rujira/contracts',
+            },
+            process.env.NETWORK === 'mainnet'
+              ? {
+                  name: 'Merge',
+                  link: '/rujira/merge',
+                }
+              : false,
+            {
+              name: 'Tokens',
+              link: '/rujira/tokens',
+            },
+          ],
         },
         process.env.NETWORK === 'mainnet'
           ? {

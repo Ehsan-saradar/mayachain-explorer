@@ -25,6 +25,52 @@ export const AssetImage = (assetStr) => {
   } else {
     // Override token icons when not found in trustwallet
     switch (chain) {
+      case 'ZEC':
+        iconPath = require('~/assets/images/assets/zec.png')
+        break
+
+      case 'ARB':
+        iconPath = require('~/assets/images/assets/arb.png')
+        if (symbol !== 'ARB') {
+          if (ticker === 'YUM') {
+            iconPath = require('~/assets/images/assets/yum.png')
+          }
+          if (ticker === 'PEPE') {
+            iconPath = require('~/assets/images/assets/pepe.png')
+          }
+          if (ticker === 'GLD') {
+            iconPath = require('~/assets/images/assets/gld.png')
+          }
+          if (ticker === 'WBTC') {
+            iconPath = require('~/assets/images/assets/wbtc.png')
+          }
+          if (ticker === 'LINK') {
+            iconPath = require('~/assets/images/assets/link.png')
+          }
+          if (ticker === 'LEO') {
+            iconPath = require('~/assets/images/assets/leo.png')
+          }
+          if (ticker === 'TGT') {
+            iconPath = require('~/assets/images/assets/tgt.png')
+          }
+          if (ticker === 'USDC') {
+            iconPath = require('~/assets/images/assets/usdc.png')
+          }
+        }
+        break
+
+      case 'DASH':
+        iconPath = require('~/assets/images/assets/dash.png')
+        break
+
+      case 'XRD':
+        iconPath = require('~/assets/images/assets/xrd.png')
+        break
+
+      case 'KUJI':
+        iconPath = require('~/assets/images/assets/kuji.png')
+        break
+
       case 'THOR':
         if (ticker != null && ticker === 'RUNE') {
           iconPath =
@@ -99,7 +145,7 @@ export const AssetImage = (assetStr) => {
           } else if (ticker === 'LENDS') {
             iconPath = 'https://etherscan.io/token/images/lends_32.png'
           } else if (ticker === 'WSTETH') {
-            iconPath = 'https://etherscan.io/token/images/wsteth3_32.png'
+            iconPath = require('~/assets/images/assets/wsteth.png')
           }
         }
         break
@@ -145,6 +191,7 @@ export const AssetImage = (assetStr) => {
             'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/cosmos/info/logo.png'
         }
         break
+
       case 'AVAX':
         if (symbol !== 'AVAX') {
           if (symbol === 'USDC') {

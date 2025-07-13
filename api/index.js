@@ -31,6 +31,7 @@ import {
   getRunePoolProviders,
   getMimir,
   getDenom,
+  getOutboundFees,
   getCodes,
   getBalance,
   getLastBlockHeight,
@@ -42,7 +43,7 @@ import {
   getPoolDetail,
   getAssets,
   getThorPools,
-  getSupplyCacao,
+  getSupplyRune,
   getSupply,
   getRPCLastBlockHeight,
   getYggdrasil,
@@ -113,6 +114,7 @@ import {
   getAffiliateSwapsDaily,
   getAffiliateHistory,
   getInfraRUJIMerge,
+  getTcyInfo,
   getDenoms,
 } from './middleware.api'
 import {
@@ -206,6 +208,7 @@ export default function ({ $axios }, inject) {
     getConstants,
     getMimir,
     getDenom,
+    getOutboundFees,
     getCodes,
     getTx,
     getAddress,
@@ -229,7 +232,7 @@ export default function ({ $axios }, inject) {
     earningsHistory,
     earnings,
     getPoolVolume,
-    getSupplyCacao,
+    getSupplyRune,
     getSupply,
     getRPCLastBlockHeight,
     getLastTvl,
@@ -316,6 +319,7 @@ export default function ({ $axios }, inject) {
     getInfraRUJIMerge,
     getTCYDistribution,
     getTCYStaker,
+    getTcyInfo,
     getDenoms,
   }
 

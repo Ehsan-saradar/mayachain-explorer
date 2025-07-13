@@ -231,7 +231,16 @@ export function getExecutionQuality() {
 
 export function getAffiliateHistory(params) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].MIDGARD_BASE_URL + 'history/affiliate', // todo: change MIDGARD_BASE_URL to SERVER_URL
+    endpoints[process.env.NETWORK].SERVER_URL + 'affiliate',
+    {
+      params,
+    }
+  )
+}
+
+export function getTcyInfo(params) {
+  return $axiosInstace.get(
+    endpoints[process.env.NETWORK].SERVER_URL + 'api/tcyInfo',
     {
       params,
     }

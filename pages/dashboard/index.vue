@@ -143,7 +143,7 @@
       />
     </div>
     <div class="cards-container">
-<!--      <LatestBlocks :burned-blocks="burnedBlocks" />-->
+      <LatestBlocks :burned-blocks="burnedBlocks" />
       <LatestTransactions :transactions="txs"></LatestTransactions>
     </div>
   </Page>
@@ -225,7 +225,7 @@ export default {
       earningsHistory: undefined,
       poolEarnings: undefined,
       affiliateChart: undefined,
-      cacaoSupply: undefined,
+      runeSupply: undefined,
       lastHeight: undefined,
       blocks: undefined,
       txs: undefined,
@@ -248,6 +248,7 @@ export default {
       network: undefined,
       ui: undefined,
       volumeUSDData: undefined,
+      tcyInfo: undefined,
     }
   },
   head: {
@@ -259,6 +260,17 @@ export default {
       chainsHeight: 'getChainsHeight',
       theme: 'getTheme',
     }),
+    calculatedAPY() {
+      if (!this.tcyInfo || !this.runePrice) return 0
+
+      const lastWeekEarnings = this.tcyInfo.last_week_earnings
+      const tcySupply = this.tcyInfo.TCYSupply
+      const price = this.tcyInfo.price
+
+      return (
+        ((lastWeekEarnings / 1e8) * this.runePrice * 52) / tcySupply / price
+      )
+    },
     totalEarning24() {
       return this.earnings24USD + this.affiliateEarning
     },
@@ -278,7 +290,7 @@ export default {
         return
       }
 
-      return +this.cacaoSupply - +this.network?.totalReserve / 1e8
+      return +this.runeSupply - +this.network?.totalReserve / 1e8
     },
     runeSymbol() {
       return AssetCurrencySymbol.RUNE
@@ -371,6 +383,32 @@ export default {
             },
           ],
         },
+        {
+          title: 'TCY ',
+          rowStart: 5,
+          colSpan: 1,
+          link: '/thorfi/tcy',
+          items: [
+            {
+              name: 'Claimed',
+              value: this.tcyInfo?.claimed_info?.total,
+              filter: (v) =>
+                this.$options.filters.percent(v / 20660654128874864, 2),
+            },
+            {
+              name: 'Total Stakers',
+              value: this.tcyInfo?.staker_info?.total || 0,
+              filter: (v) =>
+                `${this.$options.filters.number(v / 1e8, '0,0.00a')} TCY`,
+              extraText: `$${this.$options.filters.number((this.tcyInfo?.staker_info.total / 1e8) * this.tcyInfo?.price, '0,0.00a')}`,
+            },
+            {
+              name: 'APR',
+              value: this.calculatedAPY || 0,
+              filter: (v) => this.$options.filters.percent(v, 2),
+            },
+          ],
+        },
       ]
     },
     statsSettings() {
@@ -441,6 +479,15 @@ export default {
   },
   mounted() {
     this.$api
+      .getTcyInfo()
+      .then(({ data }) => {
+        this.tcyInfo = data
+      })
+      .catch((error) => {
+        console.error('Error fetching TCY info:', error)
+      })
+
+    this.$api
       .getDashboardData()
       .then(({ data }) => {
         if (!data) {
@@ -448,7 +495,7 @@ export default {
         }
 
         this.stats = data?.stats
-        this.cacaoSupply = +data?.cacaoSupply?.amount?.amount / 10 ** 10
+        this.runeSupply = +data?.runeSupply?.amount?.amount / 10 ** 8
         this.lastblock = data?.lastBlockHeight
         this.txs = data?.txs?.actions
         this.totalAddresses = +data?.addresses?.pagination?.total
@@ -484,9 +531,9 @@ export default {
           })
 
         this.$api
-          .getSupplyCacao()
+          .getSupplyRune()
           .then(
-            (res) => (this.cacaoSupply = +res?.data?.amount?.amount / 10 ** 10)
+            (res) => (this.runeSupply = +res?.data?.amount?.amount / 10 ** 8)
           )
           .catch((error) => {
             console.error(error)
@@ -760,14 +807,12 @@ export default {
       const now = moment().utc(0)
 
       d?.intervals.forEach((interval, index) => {
-        const totalVolumeUSD =
-          interval.totalVolume * interval.runePriceUSD * 10 ** -8 // todo update totalVolume to totalVolumeUsd
         if (d?.intervals.length === index + 1) {
-          if (+totalVolumeUSD === 0) {
+          if (+interval.totalVolumeUSD === 0) {
             return
           }
           swapVolume?.total.push({
-            value: +totalVolumeUSD / 10 ** 2,
+            value: +interval.totalVolumeUSD / 10 ** 2,
             itemStyle: {
               color: '#F3BA2F',
               borderRadius: [0, 0, 0, 0],
@@ -775,24 +820,17 @@ export default {
           })
           if (now.diff(moment().utc(0).startOf('day'), 'hours') < 6) {
             EODVolume =
-              d?.intervals.slice(-4, -1).reduce((a, c) => {
-                const tvu = c.totalVolume * c.runePriceUSD * 1e-8 // todo update totalVolume to totalVolumeUsd
-                return a + +tvu
-              }, 0) /
+              d?.intervals
+                .slice(-4, -1)
+                .reduce((a, c) => a + +c.totalVolumeUSD, 0) /
                 (1e2 * 3) -
-              +totalVolumeUSD / 1e2
+              +interval.totalVolumeUSD / 1e2
           } else {
-            // todo add EOD property to swap histpoy
-            EODVolume =
-              ((interval.endTime - interval.startTime) /
-                (now / 1000 - interval.startTime)) *
-              interval.totalVolume *
-              interval.runePriceUSD *
-              1e-10
+            EODVolume = interval.EODVolume / 1e2
           }
         } else {
           swapVolume?.total.push({
-            value: +totalVolumeUSD / 10 ** 2,
+            value: +interval.totalVolumeUSD / 10 ** 2,
             itemStyle: {
               borderRadius: [8, 8, 0, 0],
             },
@@ -1365,7 +1403,7 @@ export default {
     },
     formatAffiliateHistory(d) {
       const xAxis = []
-      const mayaNames = []
+      const thornames = []
       const others = []
 
       d?.intervals.forEach((interval, index) => {
@@ -1381,23 +1419,23 @@ export default {
         let filteredNames = {}
 
         // Map out the same affiliates
-        filteredNames = interval.mayanames.reduce((acc, mayaName) => {
-          const key = ['t', 'tl', 'T'].includes(mayaName.mayaname)
+        filteredNames = interval.thornames.reduce((acc, thorname) => {
+          const key = ['t', 'tl', 'T'].includes(thorname.thorname)
             ? 't'
-            : ['ti', 'te', 'tr', 'td', 'tb'].includes(mayaName.mayaname)
+            : ['ti', 'te', 'tr', 'td', 'tb'].includes(thorname.thorname)
               ? 'ti'
-              : ['va', 'vi', 'v0'].includes(mayaName.mayaname)
-                ? 'va' // todo change to maya keys
-                : mayaName.mayaname
+              : ['va', 'vi', 'v0'].includes(thorname.thorname)
+                ? 'va'
+                : thorname.thorname
 
           if (acc[key]) {
-            acc[key].volumeUSD += +mayaName.volumeUSD
-            acc[key].count += +mayaName.count
+            acc[key].volumeUSD += +thorname.volumeUSD
+            acc[key].count += +thorname.count
           } else {
             acc[key] = {
-              volumeUSD: +mayaName.volumeUSD,
-              mayaname: key,
-              count: +mayaName.count,
+              volumeUSD: +thorname.volumeUSD,
+              thorname: key,
+              count: +thorname.count,
             }
           }
           return acc
@@ -1421,18 +1459,18 @@ export default {
             continue
           }
 
-          const mayaNameIndex = mayaNames.findIndex(
+          const thornameIndex = thornames.findIndex(
             (t) => t.name === filteredNames[ti].thorname
           )
 
-          if (mayaNameIndex >= 0) {
-            if (mayaNames[mayaNameIndex].data.length < index + 1) {
-              mayaNames[mayaNameIndex].data = this.fillArrayWithZero(
-                mayaNames[mayaNameIndex].data,
+          if (thornameIndex >= 0) {
+            if (thornames[thornameIndex].data.length < index + 1) {
+              thornames[thornameIndex].data = this.fillArrayWithZero(
+                thornames[thornameIndex].data,
                 index
               )
             }
-            mayaNames[mayaNameIndex].data.push(
+            thornames[thornameIndex].data.push(
               +filteredNames[ti]?.volumeUSD / 1e2
             )
           } else {
@@ -1441,9 +1479,9 @@ export default {
               data = this.fillArrayWithZero(data, index)
             }
             data.push(+filteredNames[ti]?.volumeUSD / 1e2)
-            mayaNames.push({
+            thornames.push({
               type: 'bar',
-              name: filteredNames[ti].mayaname,
+              name: filteredNames[ti].thorname,
               showSymbol: false,
               stack: 'Total',
               data,
@@ -1464,7 +1502,7 @@ export default {
       return this.basicChartFormat(
         (value) => `$ ${this.normalFormat(value, '0,0.00a')}`,
         [
-          ...mayaNames,
+          ...thornames,
           {
             type: 'bar',
             name: 'Others',
@@ -1497,40 +1535,40 @@ export default {
             </div>
             <div class="tooltip-body">
               ${param
-            .filter((a) => a.value)
-            .sort((a, b) => {
-              if (a.seriesName === 'Others') return 1
-              if (b.seriesName === 'Others') return -1
-              return b.value - a.value
-            })
-            .map(
-              (p) => `
+                .filter((a) => a.value)
+                .sort((a, b) => {
+                  if (a.seriesName === 'Others') return 1
+                  if (b.seriesName === 'Others') return -1
+                  return b.value - a.value
+                })
+                .map(
+                  (p) => `
                   <span>
                     <div class="tooltip-item">
                       <div class="data-color" style="background-color: ${p.color}">
                       </div>
                       ${
-                this.mapInterfaceName(p.seriesName)
-                  ? `<img class="tooltip-interface-icon" src="${getInterfaceIcon(this.mapInterfaceName(p.seriesName))}"/>`
-                  : `<span style="text-align: left;">
+                        this.mapInterfaceName(p.seriesName)
+                          ? `<img class="tooltip-interface-icon" src="${getInterfaceIcon(this.mapInterfaceName(p.seriesName))}"/>`
+                          : `<span style="text-align: left;">
                             ${p.seriesName}
                           </span>`
-              }
+                      }
 
                     </div>
                     <b>$${p.value ? this.$options.filters.number(p.value, '0,0.00a') : '-'}</b>
                   </span>`
-            )
-            .join('')}
+                )
+                .join('')}
             </div>
             <span style="border-top: 1px solid var(--border-color); margin: 2px 0;"></span>
             <hr>
             <span>
               <span>Total Fees</span>
               <b>$${this.$options.filters.number(
-            param.reduce((a, c) => a + (c.value ? c.value : 0), 0),
-            '0,0a'
-          )}</b>
+                param.reduce((a, c) => a + (c.value ? c.value : 0), 0),
+                '0,0a'
+              )}</b>
             </span>
           `
         }

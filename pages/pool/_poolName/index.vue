@@ -99,11 +99,11 @@ export default {
               value: this.pool?.assetPriceUSD,
               filter: (v) => `$${this.$options.filters.number(v, '0,0.00a')}`,
             },
-            {
+            /*  {
               name: 'Earning Annual to Depth',
               value: this.pool?.earningsAnnualAsPercentOfDepth,
               filter: (v) => `${this.$options.filters.percent(v)}`,
-            },
+            }, */
             {
               name: 'Status',
               value:
@@ -117,27 +117,27 @@ export default {
                 `${this.$options.filters.number(v, '0,0')} ${this.showAsset(this.pool?.asset)}`,
             },
             {
-              name: 'Rune Depth',
-              value: this.pool?.runeDepth / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              name: 'CACAO Depth',
+              value: this.pool?.runeDepth / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
             },
             {
               header: 'All Time Stats',
             },
             {
               name: 'Total Swaps',
-              value: this.pool?.swapVolume / 10 ** 8,
+              value: this.pool?.swapVolume / 10 ** 10,
               filter: (v) =>
-                `${this.$options.filters.number(v, '0,0.00a')} RUNE`,
+                `${this.$options.filters.number(v, '0,0.00a')} CACAO`,
               usdValue: true,
             },
-            {
+            /*     {
               name: 'Total Earning',
               value: this.pool?.earnings / 10 ** 8,
               filter: (v) =>
                 `${this.$options.filters.number(v, '0,0.00a')} RUNE`,
               usdValue: true,
-            },
+            }, */
             {
               name: 'Average Slip',
               value: this.pool?.averageSlip / 10000,
@@ -173,7 +173,6 @@ export default {
         })
       ).data
       this.swapHistory = this.formatSwaps(resSwaps)
-
       this.loading = false
     },
     assetString(assetStr) {
@@ -196,19 +195,26 @@ export default {
             Math.floor((~~interval.endTime + ~~interval.startTime) / 2) * 1e3
           ).format('dddd, MMM D')
         )
+        // store cacaoPriceUSD as number
+        const cacaoPriceUSD = +interval.cacaoPriceUSD * 1e-8
         // usd is in 2 decimal precision
         ps.push(
-          (+interval.synthRedeemVolumeUSD + +interval.synthMintVolumeUSD) /
+          ((+interval.synthRedeemVolume + +interval.synthMintVolume) *
+            cacaoPriceUSD) /
             10 ** 2
         )
         pt.push(
-          (+interval.fromTradeVolumeUSD + +interval.toTradeVolumeUSD) / 10 ** 2
+          ((+interval.fromTradeVolume + +interval.toTradeVolume) *
+            cacaoPriceUSD) /
+            10 ** 2
         )
         pn.push(
-          (+interval.toRuneVolumeUSD + +interval.toAssetVolumeUSD) / 10 ** 2
+          ((+interval.toRuneVolume + +interval.toAssetVolume) * cacaoPriceUSD) /
+            10 ** 2
         )
         psec.push(
-          (+interval.toSecuredVolumeUSD + +interval.fromSecuredVolumeUSD) /
+          ((+interval.toSecuredVolume + +interval.fromSecuredVolume) *
+            cacaoPriceUSD) /
             10 ** 2
         )
       })
@@ -224,24 +230,10 @@ export default {
           },
           {
             type: 'bar',
-            name: 'Trade Swaps',
-            stack: 'total',
-            showSymbol: false,
-            data: pt,
-          },
-          {
-            type: 'bar',
             name: 'Synth Swaps',
             stack: 'total',
             showSymbol: false,
             data: ps,
-          },
-          {
-            type: 'bar',
-            name: 'Secured Swaps',
-            stack: 'total',
-            showSymbol: false,
-            data: psec,
           },
         ],
         xAxis,
@@ -305,7 +297,7 @@ export default {
           ).format('dddd, MMM D')
         )
         pe.push(+interval.assetDepth / 10 ** 8)
-        pr.push(+interval.runeDepth / 10 ** 8)
+        pr.push(+interval.runeDepth / 10 ** 10)
       })
       return this.basicChartFormat(
         (value) => `${this.$options.filters.number(+value, '0,0.00a')}`,
@@ -319,7 +311,7 @@ export default {
           },
           {
             type: 'bar',
-            name: 'Rune Depth',
+            name: 'CACAO Depth',
             showSymbol: false,
             yAxisIndex: 0,
             data: pr,
@@ -368,10 +360,10 @@ export default {
           ).format('dddd, MMM D')
         )
         const pool = interval?.pools?.find((p) => p.pool === this.poolName)
-        const earnings = (+pool?.earnings * +interval.runePriceUSD) / 10 ** 8
-        const rewards = (+pool?.rewards * +interval.runePriceUSD) / 10 ** 8
+        const earnings = (+pool?.earnings * +interval.runePriceUSD) / 10 ** 10
+        const rewards = (+pool?.rewards * +interval.runePriceUSD) / 10 ** 10
         const liquidityFee =
-          (+pool?.totalLiquidityFeesRune * +interval.runePriceUSD) / 10 ** 8
+          (+pool?.totalLiquidityFeesRune * +interval.runePriceUSD) / 10 ** 10
 
         pe.push(earnings)
         pw.push(rewards < 0 ? null : rewards)
