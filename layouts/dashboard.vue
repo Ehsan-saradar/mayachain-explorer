@@ -339,15 +339,14 @@ Vue.mixin(global)
         transform: translateY(-50%);
         width: 35px;
         height: 35px;
-        fill: #fff;
+        fill: var(--font-color);
         cursor: pointer;
         transition: background-color 0.3s ease;
-        background-color: var(--search-color);
         padding: $space-5;
         border-radius: $radius-sm;
 
         &:hover {
-          background-color: var(--active-primary-color);
+          fill: var(--primary-color);
         }
       }
 
