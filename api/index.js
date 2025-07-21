@@ -114,7 +114,6 @@ import {
   getAffiliateSwapsDaily,
   getAffiliateHistory,
   getInfraRUJIMerge,
-  getTcyInfo,
   getDenoms,
 } from './middleware.api'
 import {
@@ -193,7 +192,7 @@ export default function ({ $axios }, inject) {
   })
   $axios.interceptors.response.use(responseInterceptor, errorInterceptor)
   if (process.env.NETWORK === 'mainnet') {
-    $axios.defaults.headers.common['X-Client-ID'] = 'thorchain.net' // todo
+    $axios.defaults.headers.common['X-Client-ID'] = 'thorchain.net'
   }
 
   // defining the inner Vue axios instace to the outer scope
@@ -319,7 +318,6 @@ export default function ({ $axios }, inject) {
     getInfraRUJIMerge,
     getTCYDistribution,
     getTCYStaker,
-    getTcyInfo,
     getDenoms,
   }
 
