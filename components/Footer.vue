@@ -2,7 +2,7 @@
   <div class="footer">
     <div class="footer-container">
       <div class="footer-text">
-        <span>THORChain Explorer 2025 🌸 - Made with ❤</span>
+        <span>MayaChain Explorer 2025 🌸 - Made with ❤</span>
       </div>
 
       <div class="footer-text">
@@ -14,28 +14,21 @@
         </div>
         <div class="footer-icon">
           <a
-            href="https://gitlab.com/thorchain"
+            href="https://gitlab.com/mayachain"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Gitlab />
           </a>
           <a
-            href="https://github.com/thorchain"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Github />
-          </a>
-          <a
-            href="https://discord.gg/tW64BraTnX"
+            href="https://discord.com/invite/mayaprotocol"
             target="_blank"
             rel="noopener noreferrer"
           >
             <Discord />
           </a>
           <a
-            href="https://x.com/THORChain"
+            href="https://x.com/Maya_Protocol"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -48,9 +41,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import XIcon from '~/assets/images/x.svg?inline'
-import Github from '~/assets/images/github-brands.svg?inline'
 import Discord from '~/assets/images/discord-brands.svg?inline'
 import Gitlab from '~/assets/images/gitlab.svg?inline'
 import BlockIcon from '~/assets/images/block.svg?inline'
@@ -59,7 +50,6 @@ export default {
   name: 'FooterContent',
   components: {
     XIcon,
-    Github,
     Discord,
     Gitlab,
     BlockIcon,
