@@ -1,6 +1,7 @@
 <template>
   <div class="container-page">
-    <card class="coin-info">
+    <!-- TODO: Get the price of cacao instead of Rune -->
+    <!-- <card class="coin-info">
       <trading-view-chart symbol="BINANCE:RUNEUSDT" />
       <div class="crypto-stats">
         <div class="crypto-stat">
@@ -34,7 +35,8 @@
           </skeleton-item>
         </div>
       </div>
-    </card>
+    </card> -->
+
     <div class="chart-inner-container">
       <Card title="Type Swap Chart">
         <VChart
@@ -91,7 +93,7 @@
           :theme="chartTheme"
         />
       </Card>
-      <Card title="Supply / Burn">
+      <!-- <Card title="Supply / Burn">
         <VChart
           :option="supplyHistory"
           :loading="!supplyHistory"
@@ -99,7 +101,7 @@
           :loading-options="showLoading"
           :theme="chartTheme"
         />
-      </Card>
+      </Card> -->
     </div>
   </div>
 </template>
@@ -647,7 +649,6 @@ export default {
     swapsStats(d) {
       const xAxis = []
       const pn = []
-      const pt = []
       const ps = []
 
       d?.intervals.forEach((interval, index) => {
@@ -663,19 +664,20 @@ export default {
           (+interval.synthRedeemVolumeUSD + +interval.synthMintVolumeUSD) /
             10 ** 2
         )
-        pt.push(
-          (+interval.fromTradeVolumeUSD + +interval.toTradeVolumeUSD) / 10 ** 2
-        )
+        // pt.push(
+        //   (+interval.fromTradeVolumeUSD + +interval.toTradeVolumeUSD) / 10 ** 2
+        // )
+
         pn.push(
           (+interval.toRuneVolumeUSD + +interval.toAssetVolumeUSD) / 10 ** 2
         )
       })
 
-      const totalVolume = xAxis.map((_, i) => pn[i] + pt[i] + ps[i])
+      const totalVolume = xAxis.map((_, i) => pn[i] + ps[i])
 
       const normSeries = [
         { name: 'Native Swap Volume', data: pn },
-        { name: 'Trade Swap Volume', data: pt },
+        // { name: 'Trade Swap Volume', data: pt },
         { name: 'Synth Swap Volume', data: ps },
       ].map((s) => {
         return {
@@ -715,13 +717,6 @@ export default {
             stack: 'total',
             showSymbol: false,
             data: pn,
-          },
-          {
-            type: 'bar',
-            name: 'Trade Swaps',
-            stack: 'total',
-            showSymbol: false,
-            data: pt,
           },
           {
             type: 'bar',

@@ -7,7 +7,7 @@
 <script>
 export default {
   head: {
-    title: 'THORChain Network Explorer | Insights',
+    title: 'MAYAChain Network Explorer | Insights',
   },
 }
 </script>
