@@ -91,6 +91,10 @@ export default {
       if (typeof asset === 'object') {
         asset = assetToString(asset)
       }
+      if (asset === 'MAYA') {
+        asset = 'MAYA.CACAO'
+      }
+      console.log('Asset: ', asset)
 
       if (this.chain) {
         return true

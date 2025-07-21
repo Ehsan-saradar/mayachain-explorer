@@ -10,6 +10,10 @@ function getErcIconPath(chain, assetSymbol, assetTicker) {
 }
 
 export const AssetImage = (assetStr) => {
+  if (assetStr === 'MAYA') {
+    assetStr = 'MAYA.MAYA'
+  }
+  console.log('AssetImage', assetStr)
   const asset = assetFromString(assetStr)
   if (!asset) {
     return ''
@@ -27,6 +31,14 @@ export const AssetImage = (assetStr) => {
     switch (chain) {
       case 'ZEC':
         iconPath = require('~/assets/images/assets/zec.png')
+        break
+
+      case 'MAYA':
+        if (ticker === 'CACAO') {
+          iconPath = require('~/assets/images/assets/cacao.svg')
+        } else if (ticker === 'MAYA') {
+          iconPath = require('~/assets/images/assets/maya.svg')
+        }
         break
 
       case 'ARB':
@@ -104,6 +116,8 @@ export const AssetImage = (assetStr) => {
         } else if (symbol === 'LQDY') {
           iconPath = require('~/assets/images/assets/lqdy.png')
         }
+        iconPath =
+          'https://raw.githubusercontent.com/asgardex/thorchain_explorer/main/assets/images/thorchain-logo.png'
         break
 
       case 'BTC':
