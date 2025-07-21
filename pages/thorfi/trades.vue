@@ -262,7 +262,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Trades',
+    title: 'MAYAChain Network Explorer | Trades',
   },
 }
 </script>
