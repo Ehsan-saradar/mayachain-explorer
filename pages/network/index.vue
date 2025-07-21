@@ -408,16 +408,8 @@ export default {
           value: +this.network?.totalReserve / 10 ** 10,
         },
         {
-          name: 'CEXs',
-          value: this.networkAllocations?.totalCexs / 10 ** 10,
-        },
-        {
           name: 'Free',
           value: circulating / 10 ** 10,
-        },
-        {
-          name: 'Burnt/Killed',
-          value: burnt / 10 ** 10,
         },
       ]
     },
