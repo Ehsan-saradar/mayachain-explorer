@@ -281,7 +281,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Synths',
+    title: 'MAYAChain Network Explorer | Synths',
   },
 }
 </script>

@@ -450,7 +450,6 @@ export default {
     },
   },
   async mounted() {
-    this.tcyInfo = (await this.$api.getTcyInfo()).data
     this.mimir = (await this.$api.getMimir()).data
     this.networkConst = (await this.$api.getConstants()).data
     const earnings = (await this.$api.earnings('day', '30')).data
