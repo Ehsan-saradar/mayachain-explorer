@@ -8,7 +8,7 @@
     <info-card v-if="activeView === 'info'" :options="networkSettings">
       <template #usd="{ item }">
         {{ item.filter(item.value) }}
-        <small>(${{ ((item.value / 1e8) * runePrice) | number('0a') }})</small>
+        <small>(${{ ((item.value / 1e10) * runePrice) | number('0a') }})</small>
       </template>
     </info-card>
 
@@ -96,7 +96,7 @@ export default {
     }
   },
   head: {
-    title: 'THORChain Network Explorer | Network Settings',
+    title: 'MAYAChain Network Explorer | Network Settings',
   },
   computed: {
     ...mapGetters({
@@ -111,7 +111,7 @@ export default {
           items: [
             {
               ...this.parseConstant('OutboundTransactionFee'),
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               valueSlot: 'usd',
             },
             {
@@ -124,7 +124,7 @@ export default {
             },
             {
               ...this.parseConstant('MinTxOutVolumeThreshold'),
-              filter: (v) => `${this.normalFormat(v / 1e8)}`,
+              filter: (v) => `${this.normalFormat(v / 1e10)}`,
             },
             {
               ...this.parseConstant('TxOutDelayMax', {
@@ -216,7 +216,7 @@ export default {
             },
             {
               ...this.parseConstant('NativeTransactionFee'),
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               valueSlot: 'usd',
             },
 
@@ -226,18 +226,18 @@ export default {
             {
               ...this.parseConstant('TNSFeeOnSale'),
               name: 'Fee On Sale',
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
             },
             {
               ...this.parseConstant('TNSFeePerBlock'),
               name: 'Fee Per Block',
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
             },
             {
               ...this.parseConstant('TNSRegisterFee'),
               name: 'Register Fee',
               filter: (v) =>
-                `${this.$options.filters.number(v / 1e8, '0,0a')} RUNE`,
+                `${this.$options.filters.number(v / 1e10, '0,0a')} CACAO`,
               valueSlot: 'usd',
             },
           ],
@@ -255,7 +255,7 @@ export default {
             },
             {
               ...this.parseConstant('MinRunePoolDepth'),
-              filter: (v) => `${this.$options.filters.number(v / 1e8, '0,0')}`,
+              filter: (v) => `${this.$options.filters.number(v / 1e10, '0,0')}`,
             },
             {
               ...this.parseConstant('PoolCycle', {
@@ -265,7 +265,7 @@ export default {
             },
             {
               ...this.parseConstant('StagedPoolCost'),
-              filter: (v) => `${this.$options.filters.number(v / 1e8, '0,0')}`,
+              filter: (v) => `${this.$options.filters.number(v / 1e10, '0,0')}`,
             },
             {
               ...this.parseConstant('LiquidityLockUpBlocks'),
@@ -290,7 +290,7 @@ export default {
               value: this.mimir?.STOPSOLVENCYCHECKETH ? 'Disabled' : 'Enabled',
             },
             {
-              // Is this In RUNE
+              // Is this In CACAO
               ...this.parseConstant('PermittedSolvencyGap'),
             },
 
@@ -300,7 +300,7 @@ export default {
             {
               ...this.parseConstant('MinimumBondInRune'),
               filter: (v) =>
-                `${this.$options.filters.number(v / 1e8, '0,0a')} RUNE`,
+                `${this.$options.filters.number(v / 1e10, '0,0a')} CACAO`,
 
               valueSlot: 'usd',
             },

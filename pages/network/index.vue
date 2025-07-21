@@ -34,7 +34,7 @@
         <info-card :options="networkOverview" :inner="true" />
       </card>
       <card
-        title="THORChain version upgrade progress"
+        title="MAYAChain version upgrade progress"
         :img-src="require('@/assets/images/time.svg')"
         :img-style="{
           width: '36px',
@@ -192,7 +192,7 @@ export default {
         nodeClick: 'link',
         label: {
           formatter: (a) => {
-            return `${a.name}: ${this.$options.filters.number(a?.data?.value, '0,0a')} RUNE`
+            return `${a.name}: ${this.$options.filters.number(a?.data?.value, '0,0a')} CACO`
           },
           distanceToLabelLine: 5,
           fontFamily: 'Montserrat',
@@ -281,7 +281,7 @@ export default {
     }
   },
   head: {
-    title: 'THORChain Network Explorer | Network',
+    title: 'MAYAChain Network Explorer | Network',
   },
   computed: {
     ...mapGetters({
@@ -303,7 +303,7 @@ export default {
         },
         tooltip: {
           formatter: (a) => {
-            return `${a.name}: ${this.$options.filters.number(a?.data?.value, '0,0.00a')} RUNE`
+            return `${a.name}: ${this.$options.filters.number(a?.data?.value, '0,0.00a')} CACO`
           },
         },
       }
@@ -318,24 +318,29 @@ export default {
     },
     networkOverview() {
       let revenueOverview = []
+      console.log(
+        'this.chainsHeight?.THOR - this.thorVersion?.current',
+        this.chainsHeight?.THOR,
+        this.thorVersion?.current
+      )
       if (this.isMainnet()) {
         revenueOverview = [
           {
             name: 'Outbound Fee (30D)',
             value: this.metaReserve?.gasFeeOutbound / 1e8,
-            filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+            filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACO`,
             usdValue: true,
           },
           {
             name: 'Network Fee (30D)',
             value: this.metaReserve?.networkFee / 1e8,
-            filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+            filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACO`,
             usdValue: true,
           },
           {
             name: 'Gas Reimbursement (30D)',
             value: this.metaReserve?.gasReimbursement / 1e8,
-            filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+            filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACO`,
             usdValue: true,
           },
         ]
@@ -352,7 +357,8 @@ export default {
               name: 'Blockchain Version',
               value: this.blockchainVersion?.current,
             },
-            {
+            /* {
+            //TODO: Update mayanode /version endpoint
               name: 'Version Age',
               value:
                 this.chainsHeight?.THOR - this.thorVersion?.next_since_height,
@@ -362,19 +368,19 @@ export default {
               name: 'TOR Price in RUNE',
               value: this.thorNetwork?.tor_price_in_rune / 1e8,
               filter: (v) =>
-                `${this.$options.filters.number(v, '0,0.0000a')} RUNE`,
+                `${this.$options.filters.number(v, '0,0.0000a')} CACO`,
               usdValue: true,
-            },
+            }, */
             {
               name: 'Vaults Migrating',
               value: this.thorNetwork?.vaults_migrating ? 'Yes' : 'No',
             },
-            {
+            /* {
               name: 'Effective Security Bond',
               value: this.thorNetwork?.effective_security_bond / 1e8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACO`,
               usdValue: true,
-            },
+            }, */
             ...revenueOverview,
           ],
         },
@@ -391,27 +397,27 @@ export default {
       return [
         {
           name: 'Pooled',
-          value: +this.network?.totalPooledRune / 10 ** 8,
+          value: +this.network?.totalPooledRune / 10 ** 10,
         },
         {
           name: 'Bonded',
-          value: +this.network?.bondMetrics?.totalActiveBond / 10 ** 8,
+          value: +this.network?.bondMetrics?.totalActiveBond / 10 ** 10,
         },
         {
           name: 'Reserve',
-          value: +this.network?.totalReserve / 10 ** 8,
+          value: +this.network?.totalReserve / 10 ** 10,
         },
         {
           name: 'CEXs',
-          value: this.networkAllocations?.totalCexs / 10 ** 8,
+          value: this.networkAllocations?.totalCexs / 10 ** 10,
         },
         {
           name: 'Free',
-          value: circulating / 10 ** 8,
+          value: circulating / 10 ** 10,
         },
         {
           name: 'Burnt/Killed',
-          value: burnt / 10 ** 8,
+          value: burnt / 10 ** 10,
         },
       ]
     },
@@ -613,7 +619,7 @@ export default {
         pre.push((-1 * rewards?.intervals[index]?.blockRewards) / 1e8)
       })
       return this.basicChartFormat(
-        (value) => `${this.normalFormat(value)} RUNE`,
+        (value) => `${this.normalFormat(value)} CACAO`,
         [
           {
             type: 'bar',
