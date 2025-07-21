@@ -26,7 +26,7 @@ export default {
     return { poolName: params.poolName }
   },
   head: {
-    title: 'THORChain Network Explorer | Pool stats',
+    title: 'MAYAChain Network Explorer | Pool stats',
   },
 }
 </script>
