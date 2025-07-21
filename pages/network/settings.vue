@@ -221,7 +221,7 @@ export default {
             },
 
             {
-              header: 'THORName',
+              header: 'MAYAName',
             },
             {
               ...this.parseConstant('TNSFeeOnSale'),
@@ -254,7 +254,7 @@ export default {
               ...this.parseConstant('MaxAvailablePools'),
             },
             {
-              ...this.parseConstant('MinRunePoolDepth'),
+              ...this.parseConstant('MinCacaoPoolDepth'),
               filter: (v) => `${this.$options.filters.number(v / 1e10, '0,0')}`,
             },
             {
@@ -298,7 +298,7 @@ export default {
               header: 'Node Management',
             },
             {
-              ...this.parseConstant('MinimumBondInRune'),
+              ...this.parseConstant('MinimumBondInCacao'),
               filter: (v) =>
                 `${this.$options.filters.number(v / 1e10, '0,0a')} CACAO`,
 
