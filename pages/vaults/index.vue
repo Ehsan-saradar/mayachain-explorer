@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <cards-header :table-general-stats="vaultsGeneralStats" />
+    <!-- <cards-header :table-general-stats="vaultsGeneralStats" /> -->
     <Card title="Vaults">
       <template v-if="loading">
         <tableLoader :cols="cols" />
@@ -387,7 +387,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Vaults',
+    title: 'MAYAChain Network Explorer | Vaults',
   },
 }
 </script>
