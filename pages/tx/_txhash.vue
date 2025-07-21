@@ -1768,7 +1768,7 @@ export default {
           },
           out: [
             {
-              text: isSaver ? 'THORChain Vault' : 'THORChain Pool',
+              text: isSaver ? 'MAYAChain Vault' : 'MAYAChain Pool',
               icon: require('@/assets/images/safe.svg?inline'),
               borderColor: 'var(--primary-color)',
             },
@@ -2048,7 +2048,7 @@ export default {
           },
           out: [
             {
-              text: 'THORChain Vault',
+              text: 'MAYAChain Vault',
               icon: require('@/assets/images/safe.svg?inline'),
               borderColor: 'var(--primary-color)',
             },
@@ -2412,7 +2412,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | TX',
+    title: 'MAYAChain Network Explorer | TX',
   },
 }
 </script>
