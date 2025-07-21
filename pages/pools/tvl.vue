@@ -78,7 +78,7 @@ export default {
           if (chain === 'BNB') {
             return
           }
-          const poolUSD = (+pd.totalDepth / 1e8) * +intervals[i].runePriceUSD
+          const poolUSD = (+pd.totalDepth / 1e10) * +intervals[i].runePriceUSD
           const chainColor = this.getChainColor(chain)
 
           if (chain in pools) {
@@ -191,7 +191,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | TVL',
+    title: 'MAYAChain Network Explorer | TVL',
   },
 }
 </script>

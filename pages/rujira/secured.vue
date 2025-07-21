@@ -244,7 +244,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Secured Assets',
+    title: 'MAYAChain Network Explorer | Secured Assets',
   },
 }
 </script>

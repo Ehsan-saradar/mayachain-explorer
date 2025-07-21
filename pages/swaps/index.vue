@@ -96,7 +96,7 @@ export default {
     },
     getVolume(props) {
       const inPrice = +props?.metadata?.swap?.inPriceUSD ?? 0
-      const inAmount = +props?.in[0]?.coins[0].amount ?? 0
+      const inAmount = +props?.in[0]?.coins[0]?.amount ?? 0
       return inPrice * inAmount
     },
     volumeSort(x, y, col, rowX, rowY) {

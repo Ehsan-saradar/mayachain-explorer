@@ -154,7 +154,7 @@ export default {
     }
   },
   head: {
-    title: 'THORChain Network Explorer | Ruji Merge',
+    title: 'MAYAChain Network Explorer | Ruji Merge',
   },
   computed: {
     ...mapGetters({
