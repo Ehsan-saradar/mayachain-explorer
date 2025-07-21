@@ -55,6 +55,9 @@ export default {
       }
     },
     assetToChain(assetStr) {
+      if (assetStr === 'MAYA') {
+        assetStr = 'MAYA.MAYA'
+      }
       if (!assetStr) {
         return
       }
@@ -72,6 +75,9 @@ export default {
           break
         case 'THOR':
           asset = 'THOR.RUNE'
+          break
+        case 'MAYA':
+          asset = 'MAYA.CACAO'
           break
         default:
           break
@@ -479,7 +485,7 @@ export default {
       }
     },
     runeCur() {
-      return AssetCurrencySymbol.RUNE
+      return AssetCurrencySymbol.CACAO
     },
     clearIntervalId(id) {
       if (id) {
