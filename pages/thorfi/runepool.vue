@@ -1015,7 +1015,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | RUNEPool',
+    title: 'MAYAChain Network Explorer | RUNEPool',
   },
 }
 </script>

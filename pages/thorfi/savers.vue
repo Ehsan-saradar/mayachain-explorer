@@ -360,7 +360,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Savers',
+    title: 'MAYAChain Network Explorer | Savers',
   },
 }
 </script>

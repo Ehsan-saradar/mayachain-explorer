@@ -100,8 +100,8 @@
 </template>
 
 <script>
-import endpoints from '~/api/endpoints'
 import { mapGetters } from 'vuex'
+import endpoints from '~/api/endpoints'
 
 export default {
   data() {
@@ -222,7 +222,7 @@ export default {
     }
   },
   head: {
-    title: 'THORChain Network Explorer | Lending',
+    title: 'MAYAChain Network Explorer | Lending',
   },
   computed: {
     ...mapGetters({
@@ -327,7 +327,7 @@ export default {
         {
           name: 'Lending Fill Percentage',
           value: this.$options.filters.percent(this.pctFull()),
-          description: 'Used Capacity of THORChain Lending',
+          description: 'Used Capacity of MAYAChain Lending',
         },
         {
           name: 'Total Collateral',
