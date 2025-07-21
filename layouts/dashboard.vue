@@ -16,7 +16,7 @@
     </nav>
     <div class="background-container">
       <div class="search-bar">
-        <div class="title-search">THORChain Blockchain Explorer</div>
+        <div class="title-search">MAYAChain Blockchain Explorer</div>
         <div class="search-container">
           <div id="search-bar-container">
             <input
@@ -24,7 +24,7 @@
               v-model="searchQuery"
               class="search-input"
               type="text"
-              placeholder="Search by Address / Txn Hash / THORName"
+              placeholder="Search by Address / Txn Hash / MAYAName"
               @keyup.enter="find"
               @focus="isSearch = true"
               @blur="isSearch = false"
@@ -227,13 +227,55 @@ Vue.mixin(global)
   padding: $space-16;
   width: 100%;
   height: 16rem;
+  overflow: hidden;
+  background: rgba(42, 123, 155, 10.01);
+  background: linear-gradient(
+    90deg,
+    rgba(42, 123, 155, 0.25) 0%,
+    rgba(84, 244, 252, 0.6) 67%,
+    rgba(42, 123, 155, 0) 99%
+  );
 
-  background: url('@/assets/images/background.svg');
   background-color: var(--overview-bg);
   background-size: cover;
   background-blend-mode: overlay;
   padding: $space-10;
   margin-bottom: -4.5rem;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -336px;
+    left: -140px;
+    width: 1209px;
+    height: 600px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    z-index: -100;
+    background-size: cover;
+    background-image: url('@/assets/images/background.svg');
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -517px;
+    right: -685px;
+    width: 1209px;
+    height: 1000px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    z-index: -100;
+    background-size: cover;
+    background-image: url('@/assets/images/background.svg');
+    display: none;
+  }
+
+  @media (min-width: 1540px) {
+    &::after {
+      display: block;
+    }
+  }
 
   @include md {
     padding: $space-0 3rem;
