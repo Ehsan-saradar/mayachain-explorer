@@ -4,7 +4,7 @@ import { $axiosInstace } from './index'
 
 export function getMimir() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/mimir'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/mimir'
   )
 }
 export function getDenom() {
@@ -15,17 +15,17 @@ export function getDenom() {
 }
 export function getOutboundFees() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + '/thorchain/outbound_fees'
+    endpoints[process.env.NETWORK].THORNODE_URL + '/mayachain/outbound_fees'
   )
 }
 export function getCodes() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + '/thorchain/codes'
+    endpoints[process.env.NETWORK].THORNODE_URL + '/mayachain/codes'
   )
 }
 export function getRunePoolProviders() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/rune_providers'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/rune_providers'
   )
 }
 
@@ -37,13 +37,13 @@ export function getBalance(address) {
 
 export function getLastBlockHeight() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/lastblock'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/lastblock'
   )
 }
 
 export function getBlockChainVersion() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/version'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/version'
   )
 }
 
@@ -61,7 +61,7 @@ export function getNativeTx(txID) {
 
 export function getThornodeDetailTx(txID) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/tx/details/${txID}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/tx/details/${txID}`
   )
 }
 
@@ -69,12 +69,12 @@ export function getThornodeArchiveTx(txID) {
   if (process.env.NETWORK === 'mainnet') {
     return $axiosInstace.get(
       endpoints[process.env.NETWORK].ARCHIVE_THORNODE +
-        `thorchain/tx/details/${txID}`
+        `mayachain/tx/details/${txID}`
     )
   }
 
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/tx/details/${txID}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/tx/details/${txID}`
   )
 }
 
@@ -82,56 +82,56 @@ export function getTxArchiveStatus(txID) {
   if (process.env.NETWORK === 'mainnet') {
     return $axiosInstace.get(
       endpoints[process.env.NETWORK].ARCHIVE_THORNODE +
-        `thorchain/tx/status/${txID}`
+        `mayachain/tx/status/${txID}`
     )
   }
 
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/tx/status/${txID}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/tx/status/${txID}`
   )
 }
 
 export function getThorNetwork() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/network'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/network'
   )
 }
 
 export function getInboundAddresses() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/inbound_addresses'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/inbound_addresses'
   )
 }
 
 export function getMimirVotes() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/mimir/nodes_all'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/mimir/nodes_all'
   )
 }
 
 export function getLpPositions(poolName) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      `thorchain/pool/${poolName}/liquidity_providers`
+      `mayachain/pool/${poolName}/liquidity_providers`
   )
 }
 
 export function getUserLpPosition(poolName, address) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      `thorchain/pool/${poolName}/liquidity_provider/${address}`
+      `mayachain/pool/${poolName}/liquidity_provider/${address}`
   )
 }
 
 export function getPoolDetail(poolName) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/pool/${poolName}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/pool/${poolName}`
   )
 }
 
 export function getDerivedPoolDetail(poolName) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/dpool/${poolName}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/dpool/${poolName}`
   )
 }
 
@@ -156,19 +156,19 @@ export function getSupply() {
 
 export function getThorPools() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/pools'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/pools'
   )
 }
 
 export function getYggdrasil() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/vaults/yggdrasil'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/vaults/yggdrasil'
   )
 }
 
 export function getAsgard() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/vaults/asgard'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/vaults/asgard'
   )
 }
 
@@ -180,131 +180,131 @@ export function getAddresses() {
 
 export function getOutbound() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/queue/outbound'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/queue/outbound'
   )
 }
 
 export function getScheduled() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/queue/scheduled'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/queue/scheduled'
   )
 }
 
 export function getThorchainTx(txID) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/tx/${txID}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/tx/${txID}`
   )
 }
 
 export function getNodes() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/nodes'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/nodes'
   )
 }
 
 export function getNode(addr) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/node/${addr}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/node/${addr}`
   )
 }
 
 export function getSavers(poolName) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      `thorchain/pool/${poolName}/savers`
+      `mayachain/pool/${poolName}/savers`
   )
 }
 
 export function getPol() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/pol'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/pol'
   )
 }
 
 export function getRunePool() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/runepool'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/cacaopool'
   )
 }
 
 export function getBorrowers(pool) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      `thorchain/pool/${pool}/borrowers`
+      `mayachain/pool/${pool}/borrowers`
   )
 }
 
 export function getConstants() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/constants'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/constants'
   )
 }
 
 export function getStreamingSwap(txid) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      `thorchain/swap/streaming/${txid}`
+      `mayachain/swap/streaming/${txid}`
   )
 }
 
 export function getStreamingSwaps() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/swaps/streaming'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/swaps/streaming'
   )
 }
 
 export function getTxStages(txid) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/tx/stages/${txid}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/tx/stages/${txid}`
   )
 }
 
 export function getTxStatus(txid) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/tx/status/${txid}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/tx/status/${txid}`
   )
 }
 
 export function getThorname(name) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `thorchain/thorname/${name}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/thorname/${name}`
   )
 }
 
 export function getTradeAsset(address) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      `thorchain/trade/account/${address}`
+      `mayachain/trade/account/${address}`
   )
 }
 
 export function getTradeAssets() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/trade/units'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/trade/units'
   )
 }
 
 export function getThorVersion() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/version'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/version'
   )
 }
 
 export function getTSSMetrics() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/metrics'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/metrics'
   )
 }
 
 export function getSecuredAssets() {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + 'thorchain/securedassets'
+    endpoints[process.env.NETWORK].THORNODE_URL + 'mayachain/securedassets'
   )
 }
 
 export function getTCYStaker(address) {
   return $axiosInstace.get(
     endpoints[process.env.NETWORK].THORNODE_URL +
-      `thorchain/tcy_staker/${address}`
+      `mayachain/tcy_staker/${address}`
   )
 }
