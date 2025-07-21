@@ -547,7 +547,7 @@ export default {
     },
   },
   head: {
-    title: `THORChain Network Explorer | Address`,
+    title: `MAYAChain Network Explorer | Address`,
   },
 }
 </script>
