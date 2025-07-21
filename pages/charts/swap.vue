@@ -242,13 +242,13 @@ export default {
             showSymbol: false,
             data: pn,
           },
-          {
+          /* {
             type: 'bar',
             name: 'Trade Swaps',
             stack: 'total',
             showSymbol: false,
             data: pt,
-          },
+          }, */
           {
             type: 'bar',
             name: 'Synth Swaps',
