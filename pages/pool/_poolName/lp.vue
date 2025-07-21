@@ -73,7 +73,7 @@ export default {
           field: 'position',
         },
         {
-          label: 'Rune address',
+          label: 'Cacao address',
           field: 'rune_addr',
           formatFn: this.formatAddress,
           tdClass: 'mono',
@@ -91,10 +91,10 @@ export default {
           formatFn: (v) => `${this.formatNumber(v)}`,
         },
         {
-          label: 'Rune added',
+          label: 'Cacao added',
           field: 'rune_add',
           type: 'number',
-          formatFn: (v) => `${this.runeCur()} ${this.formatNumber(v)}`,
+          formatFn: (v) => `${this.formatNumber(v)}`,
         },
         {
           label: 'Asset Claimable',
@@ -103,10 +103,10 @@ export default {
           formatFn: this.formatNumber,
         },
         {
-          label: 'Rune Claimable',
+          label: 'Cacao Claimable',
           field: 'claimableRune',
           type: 'number',
-          formatFn: (v) => `${this.runeCur()} ${this.formatNumber(v)}`,
+          formatFn: (v) => `${this.formatNumber(v)}`,
         },
         {
           label: 'Ownership',
@@ -174,10 +174,10 @@ export default {
       if ('asset_address' in position) {
         pos = 'Asymmetrical Asset'
       }
-      if ('rune_address' in position) {
-        pos = 'Asymmetrical Rune'
+      if ('cacao_address' in position) {
+        pos = 'Asymmetrical Cacao'
       }
-      if ('asset_address' in position && 'rune_address' in position) {
+      if ('asset_address' in position && 'cacao_address' in position) {
         pos = 'Symmetrical'
       }
       return pos
@@ -186,7 +186,7 @@ export default {
       if (!this.poolDetail) return
 
       const lpUnits = this.poolDetail.LP_units
-      const balanceRune = this.poolDetail.balance_rune
+      const balanceRune = this.poolDetail.balance_cacao
       const balanceAsset = this.poolDetail.balance_asset
 
       const runeData = []
@@ -201,10 +201,10 @@ export default {
 
         this.rows.push({
           position: this.checkPostion(pos[i]),
-          rune_addr: pos[i]?.rune_address ? pos[i]?.rune_address : undefined,
+          rune_addr: pos[i]?.cacao_address ? pos[i]?.cacao_address : undefined,
           asset_addr: pos[i]?.asset_address ? pos[i]?.asset_address : undefined,
-          rune_add: pos[i]?.rune_deposit_value
-            ? pos[i]?.rune_deposit_value / 10 ** 8
+          rune_add: pos[i]?.cacao_deposit_value
+            ? pos[i]?.cacao_deposit_value / 10 ** 8
             : 'Not Added',
           asset_add: pos[i]?.asset_deposit_value
             ? pos[i]?.asset_deposit_value / 10 ** 8
@@ -231,13 +231,13 @@ export default {
     },
     updateGeneralStats() {
       if (this.poolDetail) {
-        const balanceRune = this.poolDetail.balance_rune
+        const balanceRune = this.poolDetail.balance_cacao
         const balanceAsset = this.poolDetail.balance_asset
 
         this.lpGeneralStats = [
           {
-            name: 'Balance Rune',
-            value: this.$options.filters.number(balanceRune / 1e8, '0a'),
+            name: 'Balance CACAO',
+            value: this.$options.filters.number(balanceRune / 1e10, '0a'),
           },
           {
             name: 'Balance Asset',

@@ -120,6 +120,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { earnings } from '~/api/midgard.api'
 
 export default {
   asyncData({ redirect }) {
@@ -154,7 +155,7 @@ export default {
           tdClass: 'mono',
         },
         {
-          label: 'Rune Depth',
+          label: 'Cacao Depth',
           field: 'endRuneDepth',
           type: 'number',
           formatFn: this.smallBaseAmountFormat,
@@ -247,20 +248,25 @@ export default {
       this.tableData = poolsData.pools.map((p) => {
         const o = oldPoolsData.pools.find((op) => op.pool === p.pool)
         const pe = p.earnings * this.getPPY(this.period)
-        const ea = pe / (+p.endRuneDepth * 2)
+        const ea = pe / ((+p.endRuneDepth / 1e2) * 2)
         const oea =
           (o?.earnings * this.getPPY(this.period)) / (+p?.startRuneDepth * 2)
         return {
           ...p,
-          feesEarnings: p.swapFees / p.earnings,
-          feesReward: p.swapFees / p.rewards,
+          endRuneDepth: p.endRuneDepth / 1e2,
+          swapVolume: p.swapVolume / 1e2,
+          feesEarnings: p.swapFees / p.earnings / 1e2,
+          feesReward: p.swapFees / p.rewards / 1e2,
+          earnings: p.earnings / 1e2,
+          swapFees: p.swapFees / 1e2,
+          rewards: p.rewards / 1e2,
           poolAPR: ea,
           estEarnings: pe,
           change: {
             endAssetDepth: this.getChange(p.endAssetDepth, p.startAssetDepth),
             endRuneDepth: this.getChange(p.endRuneDepth, p.startRuneDepth),
-            earnings: this.getChange(p.earnings, o?.earnings),
-            swapVolume: this.getChange(p.swapVolume, o?.swapVolume),
+            earnings: this.getChange(p.earnings, o?.earnings) / 1e2,
+            swapVolume: this.getChange(p.swapVolume, o?.swapVolume) / 1e2,
             swapFees: this.getChange(p.swapFees, o?.swapFees),
             rewards: this.getChange(p.rewards, o?.rewards),
             feesEarnings: this.getChange(
@@ -294,7 +300,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Pools Earnings',
+    title: 'MAYAChain Network Explorer | Pools Earnings',
   },
 }
 </script>

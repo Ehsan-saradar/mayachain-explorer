@@ -334,7 +334,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Pools',
+    title: 'MAYAChain Network Explorer | Pools',
   },
 }
 </script>
