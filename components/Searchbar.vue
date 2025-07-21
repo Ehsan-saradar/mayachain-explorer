@@ -88,9 +88,9 @@
         </transition>
       </div>
       <div v-show="innerWidth >= 990" id="network-wrapper">
-        <div ref="network" class="network-container" @click="toggleDialog">
+        <!-- <div ref="network" class="network-container" @click="toggleDialog">
           <SettingsIcon class="menu-icon" />
-        </div>
+        </div> -->
         <transition name="fade">
           <div v-show="showDialog" ref="netDialog" class="network-dialog">
             <a
