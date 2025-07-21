@@ -16,7 +16,7 @@
           </div>
         </div>
 
-        <advanced-filter ref="advancedFilter" />
+        <!--  <advanced-filter ref="advancedFilter" />-->
       </div>
       <div v-if="showFilters" class="mobile-filter-modal">
         <div class="modal-content">
@@ -44,7 +44,7 @@
       </div>
       <NewPagination
         v-if="txs && txs.actions && count > -1"
-        :total-rows="count"
+        :total-rows="+count"
         :per-page="30"
         :current-page="currentPage"
         @change="onPageChange"
@@ -82,34 +82,34 @@ export default {
       count: undefined,
       filtersList: [
         { label: 'All', filter: {} },
-        {
+        /*  {
           label: 'L1 Swaps',
           filter: { type: ['swap'], asset: ['l1', 'notrade', 'nosynth'] },
         },
         { label: 'Secure', filter: { type: ['secure'] } },
-        { label: 'Trade Swaps', filter: { type: ['swap'], asset: ['trade'] } },
-        { label: 'Synth Swaps', filter: { type: ['swap'], asset: ['synth'] } },
+        { label: 'Trade Swaps', filter: { type: ['swap'], asset: ['trade'] } }, */
+        { label: 'Swaps', filter: { type: ['swap'] } },
         {
           label: 'LP / Savers',
           filter: { type: ['addLiquidity', 'withdraw'] },
         },
-        {
-          label: 'RUNEPool',
-          filter: { type: ['runePoolDeposit', 'runePoolWithdraw'] },
-        },
+        /*  {
+          label: 'CACAOPool',
+          filter: { type: ['cacaoPoolDeposit', 'cacaoPoolWithdraw'] },
+        }, */
         { label: 'Send', filter: { type: ['send'] } },
         { label: 'Refund', filter: { type: ['refund'] } },
-        { label: 'Switch', filter: { type: ['switch'] } },
-        { label: 'Contract', filter: { type: ['contract'] } },
+        /* { label: 'Switch', filter: { type: ['switch'] } },
+         { label: 'Contract', filter: { type: ['contract'] } },
         {
           label: 'TCY',
           filter: { type: ['tcy_claim', 'tcy_stake', 'tcy_unstake'] },
-        },
+        }, */
       ],
     }
   },
   head: {
-    title: 'THORChain Network Explorer | Transaction',
+    title: 'MAYAChain Network Explorer | Transaction',
   },
   computed: {
     isLayerOne() {
@@ -160,8 +160,8 @@ export default {
     if (Object.keys(this.$route.query).length === 0) {
       this.$router.replace({
         query: {
-          asset: 'l1,notrade,nosynth',
-          type: 'swap',
+          /* asset: '',
+          type: '', */
         },
       })
     }
