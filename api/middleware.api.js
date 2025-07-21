@@ -230,17 +230,9 @@ export function getExecutionQuality() {
 }
 
 export function getAffiliateHistory(params) {
+  // TODO: use cache server instead of midgard
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].SERVER_URL + 'affiliate',
-    {
-      params,
-    }
-  )
-}
-
-export function getTcyInfo(params) {
-  return $axiosInstace.get(
-    endpoints[process.env.NETWORK].SERVER_URL + 'api/tcyInfo',
+    endpoints[process.env.NETWORK].MIDGARD_BASE_URL + 'history/affiliate',
     {
       params,
     }
