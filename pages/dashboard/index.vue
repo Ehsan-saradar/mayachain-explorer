@@ -249,10 +249,11 @@ export default {
       ui: undefined,
       volumeUSDData: undefined,
       tcyInfo: undefined,
+      lastBlock: 0,
     }
   },
   head: {
-    title: 'THORChain Network Explorer | Dashboard',
+    title: 'MAYAChain Network Explorer | Dashboard',
   },
   computed: {
     ...mapGetters({
@@ -344,14 +345,14 @@ export default {
           items: [
             {
               name: 'Active Bond',
-              value: +this.network?.bondMetrics?.totalActiveBond / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: +this.network?.bondMetrics?.totalActiveBond / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Standby Bond',
-              value: +this.network?.bondMetrics?.totalStandbyBond / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: +this.network?.bondMetrics?.totalStandbyBond / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
@@ -380,32 +381,6 @@ export default {
                 this.network?.poolActivationCountdown > 500
                   ? blockTime(this.network?.poolActivationCountdown, true)
                   : `${this.network?.poolActivationCountdown} Blocks`,
-            },
-          ],
-        },
-        {
-          title: 'TCY ',
-          rowStart: 5,
-          colSpan: 1,
-          link: '/thorfi/tcy',
-          items: [
-            {
-              name: 'Claimed',
-              value: this.tcyInfo?.claimed_info?.total,
-              filter: (v) =>
-                this.$options.filters.percent(v / 20660654128874864, 2),
-            },
-            {
-              name: 'Total Stakers',
-              value: this.tcyInfo?.staker_info?.total || 0,
-              filter: (v) =>
-                `${this.$options.filters.number(v / 1e8, '0,0.00a')} TCY`,
-              extraText: `$${this.$options.filters.number((this.tcyInfo?.staker_info.total / 1e8) * this.tcyInfo?.price, '0,0.00a')}`,
-            },
-            {
-              name: 'APR',
-              value: this.calculatedAPY || 0,
-              filter: (v) => this.$options.filters.percent(v, 2),
             },
           ],
         },
@@ -446,14 +421,14 @@ export default {
           items: [
             {
               name: 'Reserve',
-              value: (this.network?.totalReserve ?? 0) / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: (this.network?.totalReserve ?? 0) / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Pools',
-              value: (this.network?.totalPooledRune * 2 ?? 0) / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: (this.network?.totalPooledRune * 2 ?? 0) / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
@@ -463,8 +438,8 @@ export default {
             },
             {
               name: 'RUNEPool',
-              value: pol?.current_deposit / 1e8 || 0,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: pol?.current_deposit / 1e10 || 0,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
@@ -478,15 +453,9 @@ export default {
     },
   },
   mounted() {
-    this.$api
-      .getTcyInfo()
-      .then(({ data }) => {
-        this.tcyInfo = data
-      })
-      .catch((error) => {
-        console.error('Error fetching TCY info:', error)
-      })
-
+    setInterval(() => {
+      this.getLastBlockHeight()
+    }, 10000)
     this.$api
       .getDashboardData()
       .then(({ data }) => {
@@ -524,7 +493,7 @@ export default {
           .getLastBlockHeight()
           .then((res) => {
             this.lastblock = res.data
-            this.thorHeight = res.data.find((e) => e.chain === 'BTC').thorchain
+            this.thorHeight = res.data.find((e) => e.chain === 'BTC').mayachain
           })
           .catch((error) => {
             console.error(error)
@@ -561,7 +530,7 @@ export default {
       .then(({ data }) => {
         this.affiliateChart = this.formatAffiliateHistory(data)
         this.volumeUSDData = data.intervals.map((interval) => {
-          return (interval.thornames || []).reduce((sum, item) => {
+          return (interval.mayanames || []).reduce((sum, item) => {
             return sum + (Number(item.volumeUSD) || 0)
           }, 0)
         })
@@ -582,7 +551,8 @@ export default {
 
         this.poolEarnings = this.formatPoolEarnings(data?.earning)
         this.earningsData = data?.earning
-        this.totalSwapVolumeUSD = data.swaps?.meta?.totalVolumeUSD
+        this.totalSwapVolumeUSD =
+          data.swaps?.meta?.totalVolume * data.swaps?.meta?.cacaoPriceUSD * 1e-8
         this.totalSwapVolume = data.swaps?.meta?.totalVolume
       })
       .catch((error) => {
@@ -599,7 +569,8 @@ export default {
           .swapHistory()
           .then((res) => {
             ;({ resVolume: this.swapHistory } = this.formatSwap(res.data))
-            this.totalSwapVolumeUSD = res?.meta?.totalVolumeUSD
+            this.totalSwapVolumeUSD =
+              res?.meta?.totalVolume * res?.meta?.cacaoPriceUSD * 1e-8
             this.totalSwapVolume = res?.meta?.totalVolume
           })
           .catch((error) => {
@@ -657,7 +628,7 @@ export default {
 
     this.$api.getEarnings().then(({ data }) => {
       this.totalBurnedRune =
-        data?.meta?.pools?.find((p) => p.pool === 'income_burn').earnings / 1e8
+        data?.meta?.pools?.find((p) => p.pool === 'income_burn')?.earnings / 1e8
     })
 
     this.$api
@@ -682,18 +653,45 @@ export default {
 
     // Get inbound info
     this.getNetworkStatus()
-
     this.updateRunePool()
+    this.getLastBlockHeight()
 
     this.ui = setInterval(() => {
       this.getNetworkStatus()
-      this.getBurnData()
     }, 10000)
   },
   destroyed() {
     this.clearIntervalId(this.ui)
   },
   methods: {
+    getLastBlockHeight() {
+      this.$api
+        .getLastBlockHeight()
+        .then(({ data }) => {
+          const lastMayaBlock = data[0].mayachain
+          if (this.lastBlock === undefined || this.lastBlock === null) {
+            this.lastBlock = 0
+          }
+          if (this.lastBlock === 0) {
+            this.lastBlock = lastMayaBlock
+          } else if (lastMayaBlock > this.lastBlock) {
+            // store numbers from lastBlock to current block height in burnedBlocks as a new array
+            const newBlocks = Array.from(
+              { length: lastMayaBlock - this.lastBlock },
+              (_, i) => this.lastBlock + i + 1
+            ).reverse()
+            // Append them to the burnedBlocks list
+            this.burnedBlocks = [...newBlocks, ...this.burnedBlocks].slice(
+              0,
+              14
+            )
+            this.lastBlock = lastMayaBlock
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching latest block height:', error)
+        })
+    },
     async updateRunePool() {
       try {
         const { data } = await this.$api.getRunePool()
@@ -701,17 +699,6 @@ export default {
       } catch (error) {
         console.error('Error updating RUNE pool data:', error)
       }
-    },
-    getBurnData() {
-      this.$api
-        .getBurnedBlocks()
-        .then(({ data }) => {
-          this.totalBurned = 500_000_000 - +data.totalBurned / 1e8
-          this.burnedBlocks = data.burnedBlocks.reverse()
-        })
-        .catch((error) => {
-          console.error('Error fetching swap history:', error)
-        })
     },
     stringToPercentage(val) {
       return (Number.parseFloat(val ?? 0) * 100).toFixed(2).toString() + ' %'
@@ -808,11 +795,13 @@ export default {
 
       d?.intervals.forEach((interval, index) => {
         if (d?.intervals.length === index + 1) {
-          if (+interval.totalVolumeUSD === 0) {
+          if (+interval.totalVolume === 0) {
             return
           }
           swapVolume?.total.push({
-            value: +interval.totalVolumeUSD / 10 ** 2,
+            value:
+              (+interval.totalVolume * +interval.cacaoPriceUSD * 1e-8) /
+              10 ** 2,
             itemStyle: {
               color: '#F3BA2F',
               borderRadius: [0, 0, 0, 0],
@@ -822,15 +811,17 @@ export default {
             EODVolume =
               d?.intervals
                 .slice(-4, -1)
-                .reduce((a, c) => a + +c.totalVolumeUSD, 0) /
+                .reduce((a, c) => a + +c.totalVolume, 0) /
                 (1e2 * 3) -
-              +interval.totalVolumeUSD / 1e2
+              +interval.totalVolume / 1e10
           } else {
-            EODVolume = interval.EODVolume / 1e2
+            EODVolume = (+interval.EODVolume * +interval.cacaoPriceUSD) / 1e10
           }
         } else {
           swapVolume?.total.push({
-            value: +interval.totalVolumeUSD / 10 ** 2,
+            value:
+              (+interval.totalVolume * +interval.cacaoPriceUSD * 1e-8) /
+              10 ** 2,
             itemStyle: {
               borderRadius: [8, 8, 0, 0],
             },
@@ -1154,34 +1145,21 @@ export default {
           Math.floor((~~interval.endTime + ~~interval.startTime) / 2) * 1e3
         )
         xAxis.push(date.format('dddd, MMM D'))
-        const devFund =
-          (+interval.pools.find((p) => p.pool === 'dev_fund_reward')?.earnings /
-            10 ** 8) *
-          Number.parseFloat(interval.runePriceUSD)
         const incomeBurn =
           (+interval.pools.find((p) => p.pool === 'income_burn')?.earnings /
             10 ** 8) *
           Number.parseFloat(interval.runePriceUSD)
-        const tcyStakeReward =
-          (+interval.pools.find((p) => p.pool === 'tcy_stake_reward')
-            ?.earnings /
-            10 ** 8) *
-          Number.parseFloat(interval.runePriceUSD)
 
         le.push(
-          (+interval.liquidityEarnings / 10 ** 8) *
-            Number.parseFloat(interval.runePriceUSD) -
-            devFund -
-            incomeBurn -
-            tcyStakeReward
-        )
-        be.push(
-          (+interval.bondingEarnings / 10 ** 8) *
+          (+interval.liquidityEarnings / 10 ** 10) *
             Number.parseFloat(interval.runePriceUSD)
         )
-        df.push(devFund)
+        be.push(
+          (+interval.bondingEarnings / 10 ** 10) *
+            Number.parseFloat(interval.runePriceUSD)
+        )
+        //  df.push(devFund)
         ib.push(incomeBurn)
-        tc.push(tcyStakeReward)
 
         const volumeUSD = (this.volumeUSDData[index] || 0) / 1e2
         af.push({
@@ -1203,7 +1181,7 @@ export default {
             value:
               ((+interval.EODBondEarnings + +interval.EODLiquidityEarnings) *
                 +interval.runePriceUSD) /
-                1e8 +
+                1e10 +
               (affiliateEOD || 0),
             itemStyle: {
               color: 'transparent',
@@ -1254,26 +1232,10 @@ export default {
           },
           {
             type: 'bar',
-            name: 'Dev Fund Earning',
-            stack: 'Total',
-            showSymbol: false,
-            data: df,
-            smooth: true,
-          },
-          {
-            type: 'bar',
             name: 'System Burn',
             stack: 'Total',
             showSymbol: false,
             data: ib,
-            smooth: true,
-          },
-          {
-            type: 'bar',
-            name: 'TCY Stake Reward',
-            stack: 'Total',
-            showSymbol: false,
-            data: tc,
             smooth: true,
           },
           this.volumeUSDData && {
@@ -1304,14 +1266,7 @@ export default {
             textStyle: {
               color: 'var(--font-color)',
             },
-            data: [
-              'Bond Earning',
-              'LP Earning',
-              'Dev Fund Earning',
-              'Affiliate Fee',
-              'Burn',
-              'TCY Stake Reward',
-            ],
+            data: ['Bond Earning', 'LP Earning', 'Affiliate Fee', 'Burn'],
           },
         },
         (param) => {
@@ -1380,7 +1335,7 @@ export default {
                     param.find((p) => p.seriesName === 'Affiliate Fee').value,
                     '0,0a'
                   )
-                : affiliateEOD != 0
+                : affiliateEOD !== 0
                   ? `$${this.$options.filters.number(
                       affiliateEOD,
                       '0,0a'
@@ -1403,7 +1358,7 @@ export default {
     },
     formatAffiliateHistory(d) {
       const xAxis = []
-      const thornames = []
+      const mayanames = []
       const others = []
 
       d?.intervals.forEach((interval, index) => {
@@ -1419,23 +1374,23 @@ export default {
         let filteredNames = {}
 
         // Map out the same affiliates
-        filteredNames = interval.thornames.reduce((acc, thorname) => {
-          const key = ['t', 'tl', 'T'].includes(thorname.thorname)
+        filteredNames = interval.mayanames.reduce((acc, mayanames) => {
+          const key = ['t', 'tl', 'T'].includes(mayanames.mayaname)
             ? 't'
-            : ['ti', 'te', 'tr', 'td', 'tb'].includes(thorname.thorname)
+            : ['ti', 'te', 'tr', 'td', 'tb'].includes(mayanames.mayaname)
               ? 'ti'
-              : ['va', 'vi', 'v0'].includes(thorname.thorname)
+              : ['va', 'vi', 'v0'].includes(mayanames.mayaname)
                 ? 'va'
-                : thorname.thorname
+                : mayanames.mayaname
 
           if (acc[key]) {
-            acc[key].volumeUSD += +thorname.volumeUSD
-            acc[key].count += +thorname.count
+            acc[key].volumeUSD += +mayanames.volumeUSD
+            acc[key].count += +mayanames.count
           } else {
             acc[key] = {
-              volumeUSD: +thorname.volumeUSD,
-              thorname: key,
-              count: +thorname.count,
+              volumeUSD: +mayanames.volumeUSD,
+              mayanames: key,
+              count: +mayanames.count,
             }
           }
           return acc
@@ -1459,18 +1414,18 @@ export default {
             continue
           }
 
-          const thornameIndex = thornames.findIndex(
-            (t) => t.name === filteredNames[ti].thorname
+          const mayanamesIndex = mayanames.findIndex(
+            (t) => t.name === filteredNames[ti].mayanames
           )
 
-          if (thornameIndex >= 0) {
-            if (thornames[thornameIndex].data.length < index + 1) {
-              thornames[thornameIndex].data = this.fillArrayWithZero(
-                thornames[thornameIndex].data,
+          if (mayanamesIndex >= 0) {
+            if (mayanames[mayanamesIndex].data.length < index + 1) {
+              mayanames[mayanamesIndex].data = this.fillArrayWithZero(
+                mayanames[mayanamesIndex].data,
                 index
               )
             }
-            thornames[thornameIndex].data.push(
+            mayanames[mayanamesIndex].data.push(
               +filteredNames[ti]?.volumeUSD / 1e2
             )
           } else {
@@ -1479,9 +1434,9 @@ export default {
               data = this.fillArrayWithZero(data, index)
             }
             data.push(+filteredNames[ti]?.volumeUSD / 1e2)
-            thornames.push({
+            mayanames.push({
               type: 'bar',
-              name: filteredNames[ti].thorname,
+              name: filteredNames[ti].mayanames,
               showSymbol: false,
               stack: 'Total',
               data,
@@ -1495,14 +1450,13 @@ export default {
           return ''
         }
 
-        console.log(this.theme)
         return this.theme === 'light' ? detail.icons.url : detail.icons.urlDark
       }
 
       return this.basicChartFormat(
         (value) => `$ ${this.normalFormat(value, '0,0.00a')}`,
         [
-          ...thornames,
+          ...mayanames,
           {
             type: 'bar',
             name: 'Others',
@@ -1977,6 +1931,7 @@ export default {
     border-radius: $radius-lg;
     padding: $space-14;
     flex: 1;
+    z-index: 1;
   }
 }
 

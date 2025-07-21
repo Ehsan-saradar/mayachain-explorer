@@ -9,7 +9,7 @@
             :loading="loading || totalSwap24USD === null"
             class="value"
           >
-            ${{ (totalSwap24USD / 1e2) | number('0a') }}
+            ${{ totalSwap24USD | number('0.00a') }}
           </skeleton-item>
         </div>
         <arrow-right-icon class="arrow-icon" />
@@ -56,10 +56,10 @@
       <div class="stat-item">
         <Burn class="stat-image" />
         <div class="item-detail">
-          <div class="header">Total | Circulating | Burned</div>
+          <div class="header">Total | Circulating</div>
           <skeleton-item :loading="loading" class="value">
-            {{ runeSupply | number('0a') }} | {{ circulating | number('0a') }} |
-            {{ totalBurnedRune | number('0a') }}
+            {{ runeSupply | number('0a') }} |
+            {{ circulating | number('0.00a') }}
           </skeleton-item>
         </div>
       </div>
@@ -129,11 +129,11 @@ export default {
         ((+this.network.totalPooledRune * 2 +
           +this.network.bondMetrics.totalActiveBond) *
           this.stats.runePriceUSD) /
-        1e8
+        1e10
       )
     },
     circulating() {
-      return +this.runeSupply - (+this.network?.totalReserve || 0) / 1e8
+      return +this.runeSupply - (+this.network?.totalReserve || 0) / 1e10
     },
     runeVolume() {
       return (
@@ -144,7 +144,7 @@ export default {
       )
     },
     totalEarning24() {
-      return (this.stats.earnings24 / 1e8) * this.stats.runePriceUSD
+      return (this.stats.earnings24 / 1e10) * this.stats.runePriceUSD
     },
   },
   async mounted() {
@@ -157,7 +157,8 @@ export default {
         const { data: dashboardData } = await this.$api.getDashboardData()
         if (dashboardData) {
           this.stats = dashboardData.stats || {}
-          this.runeSupply = +dashboardData.runeSupply?.amount?.amount / 1e8 || 0
+          this.runeSupply =
+            +dashboardData.runeSupply?.amount?.amount / 1e10 || 0
           this.network = dashboardData.networkData || {}
           this.totalSwap24USD = +dashboardData.stats?.volume24USD || 0
         }

@@ -3,27 +3,24 @@
     <div>
       <transition-group name="block" tag="div">
         <div
-          v-for="block in burnedBlocks"
-          :key="block.blockHeight"
+          v-for="(block, index) in burnedBlocks"
+          :key="block"
           class="block-items"
         >
           <div class="block-info-overview">
-            <nuxt-link
-              class="height clickable"
-              :to="`/block/${block.blockHeight}`"
-            >
-              {{ block.blockHeight | number('0,0') }}
+            <nuxt-link class="height clickable" :to="`/block/${block}`">
+              {{ block | number('0,0') }}
             </nuxt-link>
             <small class="duration">
-              {{ getDuration(block.timestamp) }} Seconds
+              {{ Math.round(index * 5.7 + 1).toFixed(0) }} Seconds ago
             </small>
           </div>
-          <div class="middle-section-overview">
+          <!-- <div class="middle-section-overview">
             <div class="block-burned-item">
               <small>Burned</small>
               <div class="burn-item mini-bubble orange">
                 <Burn class="burn-icon"></Burn>
-                {{ decimalFormat(block.burnedAmount / 1e8) }}
+                {{ decimalFormat(block.burnedAmount || 0 / 1e8) }}
               </div>
             </div>
 
@@ -32,7 +29,7 @@
               <div class="burn-item mini-bubble yellow">
                 <rune class="rune-icon"></rune>
                 <div class="amount-burn">
-                  {{ decimalFormat(block.devAmount / 1e8) }}
+                  {{ decimalFormat(block.devAmount || 0 / 1e8) }}
                 </div>
               </div>
             </div>
@@ -42,7 +39,7 @@
               <div class="burn-item mini-bubble info">
                 <rune class="rune-icon"></rune>
                 <div class="amount-burn">
-                  {{ decimalFormat(block.poolAmount / 1e8) }}
+                  {{ decimalFormat(block.poolAmount || 0 / 1e8) }}
                 </div>
               </div>
             </div>
@@ -52,11 +49,11 @@
               <div class="burn-item mini-bubble">
                 <rune class="rune-icon"></rune>
                 <div class="amount-burn">
-                  {{ decimalFormat(block.bondAmount / 1e8) }}
+                  {{ decimalFormat(block.bondAmount || 0 / 1e8) }}
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </transition-group>
       <template v-if="burnedBlocks.length == 0">
@@ -78,16 +75,15 @@ export default {
   components: {
     BounceLoader,
     Burn,
-    Rune
+    Rune,
   },
   props: {
     burnedBlocks: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
-  methods: {
-  }
+  methods: {},
 }
 </script>
 
