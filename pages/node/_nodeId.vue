@@ -77,7 +77,7 @@ export default {
     }
   },
   head: {
-    title: 'THORChain Network Explorer | Node',
+    title: 'MAYAChain Network Explorer | Node',
   },
   computed: {
     nodeSettings() {

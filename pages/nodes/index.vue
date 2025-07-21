@@ -282,7 +282,7 @@ export default {
         },
         {
           label: 'Bond',
-          field: 'total_bond',
+          field: 'bond',
           type: 'number',
           formatFn: this.normalFormat,
           tdClass: 'mono',
@@ -415,7 +415,7 @@ export default {
         },
         {
           label: 'Bond',
-          field: 'total_bond',
+          field: 'bond',
           type: 'number',
           formatFn: this.normalFormat,
           tdClass: 'mono',
@@ -497,7 +497,7 @@ export default {
         },
         {
           label: 'Bond',
-          field: 'total_bond',
+          field: 'bond',
           type: 'number',
           formatFn: this.normalFormat,
           tdClass: 'mono',
@@ -527,34 +527,34 @@ export default {
             },
             {
               name: 'Bond',
-              value: this.bondMetrics?.totalActiveBond / 10 ** 8,
+              value: this.bondMetrics?.totalActiveBond / 10 ** 10,
               usdValue: true,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
             },
             {
               name: 'Average',
-              value: this.bondMetrics?.averageActiveBond / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: this.bondMetrics?.averageActiveBond / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Maximum',
-              value: Math.floor(this.bondMetrics?.maximumActiveBond / 10 ** 8),
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: Math.floor(this.bondMetrics?.maximumActiveBond / 10 ** 10),
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Minimum',
-              value: Math.floor(this.bondMetrics?.minimumActiveBond / 10 ** 8),
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: Math.floor(this.bondMetrics?.minimumActiveBond / 10 ** 10),
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Max efficient',
               value: this.calculateHardCap(),
               filter: (v) =>
-                `${this.$options.filters.number(v, '0,0.00a')} RUNE`,
-              extraInfo: `${this.$options.filters.number(this.calculateHardCap(), '0,0.00')} RUNE`,
+                `${this.$options.filters.number(v, '0,0.00a')} CACAO`,
+              extraInfo: `${this.$options.filters.number(this.calculateHardCap(), '0,0.00')} CACAO`,
               usdValue: true,
             },
           ],
@@ -576,34 +576,36 @@ export default {
             },
             {
               name: 'Bond',
-              value: this.bondMetrics?.totalStandbyBond / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: this.bondMetrics?.totalStandbyBond / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Average',
-              value: this.bondMetrics?.averageStandbyBond / 10 ** 8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: this.bondMetrics?.averageStandbyBond / 10 ** 10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Maximum',
-              value: Math.floor(this.bondMetrics?.maximumStandbyBond / 10 ** 8),
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: Math.floor(
+                this.bondMetrics?.maximumStandbyBond / 10 ** 10
+              ),
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Minimum',
-              value: this.bondMetrics?.minimumStandbyBond / 10 ** 8,
+              value: this.bondMetrics?.minimumStandbyBond / 10 ** 10,
               filter: (v) =>
-                `${this.$options.filters.number(v, '0,0.00a')} RUNE`,
+                `${this.$options.filters.number(v, '0,0.00a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Least Churn',
               value: this.leastBondChurn,
               filter: (v) =>
-                `${this.$options.filters.number(v, '0,0.00a')} RUNE`,
+                `${this.$options.filters.number(v, '0,0.00a')} CACAO`,
               usdValue: true,
             },
           ],
@@ -650,7 +652,7 @@ export default {
               name: 'Total Rewards',
               value: this.totalAwards / 1e8,
               usdValue: true,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
             },
             {
               name: 'Average APY ',
@@ -660,13 +662,13 @@ export default {
             {
               name: 'Monthly Node Return',
               value: this.monthlyNodeReturn() / 1e8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Annual Node Return ',
               value: this.annualNodeReturn() / 1e8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
             {
@@ -698,9 +700,9 @@ export default {
             },
             {
               name: 'Leaving Bond',
-              value: this.leavingBond / 1e8,
+              value: this.leavingBond / 1e10,
               filter: (v) =>
-                `${this.$options.filters.number(v, '0,0.00a')} RUNE`,
+                `${this.$options.filters.number(v, '0,0.00a')} CACAO`,
               usdValue: true,
             },
             {
@@ -710,15 +712,15 @@ export default {
             },
             {
               name: 'Entering Bond',
-              value: this.enteringBond / 1e8,
+              value: this.enteringBond / 1e10,
               filter: (v) =>
-                `${this.$options.filters.number(v, '0,0.00a')} RUNE`,
+                `${this.$options.filters.number(v, '0,0.00a')} CACAO`,
               usdValue: true,
             },
             {
               name: 'Bond Difference',
-              value: (this.enteringBond - this.leavingBond) / 1e8,
-              filter: (v) => `${this.$options.filters.number(v, '0,0a')} RUNE`,
+              value: (this.enteringBond - this.leavingBond) / 1e10,
+              filter: (v) => `${this.$options.filters.number(v, '0,0a')} CACAO`,
               usdValue: true,
             },
           ],
@@ -758,10 +760,10 @@ export default {
           }
 
           if (
-            (!lowestBond || lowestBond > +el.total_bond) &&
+            (!lowestBond || lowestBond > +el.bond) &&
             el.requested_to_leave === false
           ) {
-            lowestBond = +el.total_bond
+            lowestBond = +el.bond
           }
 
           if (
@@ -780,9 +782,10 @@ export default {
           fillNodeData(filteredNodes, el, index)
 
           filteredNodes[index].churn = []
+          filteredNodes[index].bond = (+el.bond * 1e-10).toFixed(0)
 
           // Add churn data
-          if (+el.total_bond === lowestBond) {
+          if (+el.bond === lowestBond) {
             filteredNodes[index].churn.push({
               name: 'Lowest Bond',
               icon: require('@/assets/images/cheap.svg?inline'),
@@ -791,7 +794,7 @@ export default {
                   ? 'churn-out'
                   : 'churn-out-candidate',
             })
-            leavingBond += +el.total_bond
+            leavingBond += +el.bond
             leavingCount += 1
           }
 
@@ -804,7 +807,7 @@ export default {
                   ? 'churn-out'
                   : 'churn-out-candidate',
             })
-            leavingBond += +el.total_bond
+            leavingBond += +el.bond
             leavingCount += 1
           }
 
@@ -817,7 +820,7 @@ export default {
                   ? 'churn-out'
                   : 'churn-out-candidate',
             })
-            leavingBond += +el.total_bond
+            leavingBond += +el.bond
             leavingCount += 1
           }
 
@@ -846,7 +849,7 @@ export default {
             ) {
               extraChurn += 1
             }
-            leavingBond += +el.total_bond
+            leavingBond += +el.bond
             leavingCount += 1
           }
         })
@@ -875,14 +878,14 @@ export default {
         let stbNodes = this.nodesQuery?.filter(
           (e) =>
             (e.status === 'Standby' || e.status === 'Ready') &&
-            (activeVersion.includes(e.version) || e.total_bond >= this.minBond)
+            (activeVersion.includes(e.version) || e.bond >= this.minBond)
         )
 
         if (stbNodes.length === 0) {
           return []
         }
 
-        stbNodes = orderBy(stbNodes, [(o) => +o.total_bond], ['desc'])
+        stbNodes = orderBy(stbNodes, [(o) => +o.bond], ['desc'])
 
         const filteredNodes = []
         const churnInNumbers = 3 + this.newNodesChurn + this.extraNodeChurn
@@ -897,6 +900,7 @@ export default {
           const chainHeight = this.chainsHeight?.THOR
 
           filteredNodes[i].churn = []
+          filteredNodes[i].bond = (+el.bond * 1e-10).toFixed(0)
 
           if (el.jail?.release_height > chainHeight) {
             filteredNodes[i].churn.push({
@@ -922,7 +926,7 @@ export default {
             if (el.jail && el.jail.release_height > this.chainsHeight?.THOR) {
               continue
             }
-            if (+el.total_bond < this.minBond) {
+            if (+el.bond < this.minBond) {
               continue
             }
             filteredNodes[i].churn.push({
@@ -934,7 +938,7 @@ export default {
                   : 'churn-in-candidate',
             })
             churnNodes++
-            enteringBond += +el.total_bond
+            enteringBond += +el.bond
             enteringCount += 1
             lastChurnIndex = i
           }
@@ -950,7 +954,7 @@ export default {
         this.setEntering(enteringBond, enteringCount)
 
         // Detect the last churn node
-        this.setTheLeastBondChurn(filteredNodes[lastChurnIndex]?.total_bond)
+        this.setTheLeastBondChurn(filteredNodes[lastChurnIndex]?.bond)
 
         return filteredNodes
       } else {
@@ -970,7 +974,7 @@ export default {
             !stbNodes.includes(e.node_address)
         )
 
-        whtNodes = orderBy(whtNodes, [(o) => +o.total_bond], ['desc'])
+        whtNodes = orderBy(whtNodes, [(o) => +o.bond], ['desc'])
 
         const filteredNodes = []
 
@@ -1177,15 +1181,15 @@ export default {
         return 0
       }
       if (actNodes?.length < 2) {
-        return actNodes[0].total_bond
+        return actNodes[0].bond
       }
-      actNodes?.sort((a, b) => +a.total_bond - +b.total_bond)
+      actNodes?.sort((a, b) => +a.bond - +b.bond)
       const lowerNodes = actNodes?.slice(
         0,
         Math.floor((actNodes.length * 2) / 3)
       )
       return Math.floor(
-        (Number.parseInt(lowerNodes?.slice(-1)[0]?.total_bond) ?? 0) / 10 ** 8
+        (Number.parseInt(lowerNodes?.slice(-1)[0]?.bond) ?? 0) / 10 ** 8
       )
     },
     calMedianBond() {
@@ -1226,7 +1230,7 @@ export default {
     },
   },
   head: {
-    title: 'THORChain Network Explorer | Nodes',
+    title: 'MAYAChain Network Explorer | Nodes',
   },
 }
 </script>

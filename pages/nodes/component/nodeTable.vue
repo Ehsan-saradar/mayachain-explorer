@@ -141,13 +141,10 @@
               <VFlag :flag="props.row.location.code" />
             </div>
           </span>
-          <span
-            v-else-if="props.column.field == 'total_bond'"
-            class="hoverable"
-          >
-            <span v-tooltip="formatCurrency(runePrice * props.row.total_bond)">
+          <span v-else-if="props.column.field == 'bond'" class="hoverable">
+            <span v-tooltip="formatCurrency(runePrice * props.row.bond)">
               <span class="extra">{{ runeCur() }}</span>
-              {{ normalFormat(props.row.total_bond) }}
+              {{ normalFormat(props.row.bond) }}
             </span>
           </span>
           <span v-else-if="props.column.field == 'award'" class="hoverable">
@@ -256,7 +253,9 @@
                       : '',
                     fontWeight: isFav(props.row.address) ? 'bold' : 'normal',
                   }"
-                  >{{ props.row.operator.slice(-4) }}</nuxt-link
+                  >{{
+                    props.row.operator ? props.row.operator.slice(-4) : ''
+                  }}</nuxt-link
                 >
                 <div
                   v-if="props.row.providers && props.row.providers.length !== 1"
@@ -299,9 +298,7 @@
                     </td>
                     <td style="text-align: right">
                       <span class="mono">
-                        {{
-                          (p.bond / 10 ** 8 / props.row.total_bond) | percent(2)
-                        }}
+                        {{ (p.bond / 10 ** 8 / props.row.bond) | percent(2) }}
                       </span>
                     </td>
                   </tr>
@@ -310,8 +307,10 @@
                 <div style="margin-top: 5px">
                   <strong>Operator: </strong>
                   <span class="mono"
-                    >{{ props.row.operator.slice(-4) }} -
-                    {{ props.formattedRow['fee'] }}</span
+                    >{{
+                      props.row.operator ? props.row.operator.slice(-4) : ''
+                    }}
+                    - {{ props.formattedRow['fee'] }}</span
                   >
                 </div>
               </template>
@@ -330,7 +329,9 @@
                     : '',
                   fontWeight: isFav(props.row.address) ? 'bold' : 'normal',
                 }"
-                >{{ props.row.operator.slice(-4) }}</nuxt-link
+                >{{
+                  props.row.operator ? props.row.operator.slice(-4) : ''
+                }}</nuxt-link
               >
             </div>
           </span>
@@ -491,7 +492,7 @@
             </td>
             <td style="text-align: right">
               <span class="mono">
-                {{ (p.bond / 10 ** 8 / selectedRow.total_bond) | percent(2) }}
+                {{ (p.bond / 10 ** 8 / selectedRow.bond) | percent(2) }}
               </span>
             </td>
           </tr>
@@ -518,7 +519,6 @@ import { mapGetters } from 'vuex'
 import { remove, orderBy } from 'lodash'
 import { rcompare } from 'semver'
 
-import { props } from 'qrcode.vue'
 import JsonIcon from '@/assets/images/json.svg?inline'
 import InfoIcon from '@/assets/images/info.svg?inline'
 import StarIcon from '@/assets/images/bookmark.svg?inline'
