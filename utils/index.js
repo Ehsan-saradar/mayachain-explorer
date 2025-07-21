@@ -498,7 +498,7 @@ let supportedChains = []
 export function availableChains(nodes) {
   return compact(
     nodes?.map((n) =>
-      Object.keys(n?.scanner ?? {}).filter((chain) => chain !== 'THOR')
+      Object.keys(n?.scanner ?? {}).filter((chain) => chain !== 'MAYA')
     )
   ).reduce((a, b) => (a?.length >= b?.length ? a : b), 0)
 }
