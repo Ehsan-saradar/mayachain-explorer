@@ -3,7 +3,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'THORChain Network Explorer',
+    title: 'MayaChain Network Explorer',
     htmlAttrs: {
       lang: 'en',
     },
@@ -12,7 +12,7 @@ export default {
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'THORChain Network Explorer',
+        content: 'MayaChain Network Explorer',
       },
       {
         name: 'viewport',
@@ -23,12 +23,12 @@ export default {
         hid: 'description',
         name: 'description',
         content:
-          'Explore the THORChain network with its interactive charts, detailed tracking, and comprehensive data, ensuring you stay informed about all aspects of THORChain.',
+          'Explore the MayaChain network with its interactive charts, detailed tracking, and comprehensive data, ensuring you stay informed about all aspects of MayaChain.',
       },
       { name: 'format-detection', content: 'telephone=no' },
       {
         property: 'og:site_name',
-        content: 'THORChain Explorer',
+        content: 'MayaChain Explorer',
       },
       {
         property: 'og:type',
@@ -42,18 +42,18 @@ export default {
         hid: 'twitter:title',
         name: 'twitter:title',
         content:
-          'Explore the THORChain network with its interactive charts, detailed tracking, and comprehensive data, ensuring you stay informed about all aspects of THORChain.',
+          'Explore the MayaChain network with its interactive charts, detailed tracking, and comprehensive data, ensuring you stay informed about all aspects of MayaChain.',
       },
       {
         hid: 'twitter:description',
         name: 'twitter:description',
         content:
-          'Explore the THORChain network with its interactive charts, detailed tracking, and comprehensive data, ensuring you stay informed about all aspects of THORChain.',
+          'Explore the MayaChain network with its interactive charts, detailed tracking, and comprehensive data, ensuring you stay informed about all aspects of MayaChain.',
       },
       {
         hid: 'twitter:site',
         name: 'twitter:site',
-        content: 'thorchain.net',
+        content: 'MayaChain.net',
       },
       {
         hid: 'twitter:image',
