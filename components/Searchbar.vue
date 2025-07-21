@@ -7,7 +7,7 @@
       <div class="header-info">
         <div class="price-container">
           <div ref="header-info-1">
-            <small style="color: var(--sec-font-color)">RUNE Price:</small>
+            <small style="color: var(--sec-font-color)">CACAO Price:</small>
             <small
               v-if="runePrice"
               :key="runePrice"
@@ -18,18 +18,6 @@
             </small>
             <small v-else>-</small>
           </div>
-          <nuxt-link ref="header-info-3" :to="'/thorfi/tcy'">
-            <small style="color: var(--sec-font-color)">TCY Price:</small>
-            <small
-              v-if="tcyPrice"
-              :key="tcyPrice"
-              style="color: var(--primary-color)"
-              class="mono value"
-            >
-              {{ tcyPrice | currency }}
-            </small>
-            <small v-else>-</small>
-          </nuxt-link>
         </div>
         <nuxt-link ref="header-info-2" :to="'/nodes'">
           <small style="color: var(--sec-font-color)">Node Count:</small>
@@ -60,7 +48,7 @@
           type="text"
           :placeholder="
             isSearch || innerWidth > 992
-              ? 'Search by Address / Txn Hash / THORName'
+              ? 'Search by Address / Txn Hash / MAYAName'
               : false
           "
           @keyup.enter="find"

@@ -62,7 +62,7 @@
       </template>
       <div v-if="noOutnound" class="no-outbound">
         <scheduleIcon class="schedule-icon large-icon" />
-        <h3>There is no outbound schedule inside THORChain.</h3>
+        <h3>There is no outbound schedule inside MAYAChain.</h3>
       </div>
       <template v-else>
         <div

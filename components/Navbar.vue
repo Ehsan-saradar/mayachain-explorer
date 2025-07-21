@@ -4,10 +4,10 @@
       <nuxt-link to="/dashboard" class="logo-link">
         <div class="logo-wrapper">
           <ThorchainLogo class="logo" />
-          <div class="thorchain-name">
-            <strong>THORChain</strong>
+          <!-- <div class="thorchain-name">
+            <strong>MAYAChain</strong>
             Explorer
-          </div>
+          </div> -->
         </div>
       </nuxt-link>
 
@@ -169,7 +169,7 @@
 
 <script>
 import { mapMutations, mapGetters } from 'vuex'
-import ThorchainLogo from '~/assets/images/thorchain-logo.svg?inline'
+import ThorchainLogo from '~/assets/images/mayachainlogo.svg?inline'
 import BlueElectra from '~/assets/images/blueelectra.svg?inline'
 import MenuIcon from '~/assets/images/menu-burger.svg?inline'
 import CrossIcon from '~/assets/images/cross.svg?inline'
@@ -222,22 +222,22 @@ export default {
               name: 'Constants',
               link: '/network/settings',
             },
-            {
-              name: 'Votes',
-              link: '/network/votes',
-            },
+            // {
+            //   name: 'Votes',
+            //   link: '/network/votes',
+            // },
             {
               name: 'Churn',
               link: '/network/churn',
             },
-            {
+            /*  {
               name: 'Pendulum',
               link: '/network/pendulum',
             },
             {
               name: 'Outbound Fees',
               link: '/network/outbounds',
-            },
+            }, */
           ],
         },
         {
@@ -278,68 +278,68 @@ export default {
             },
           ],
         },
-        {
-          name: 'THORFi',
-          unicon: 'financeUnselected',
-          icon: 'financeSelected',
-          link: '/thorfi',
-          submenu: [
-            {
-              name: 'TCY',
-              link: '/thorfi/tcy',
-            },
-            {
-              name: 'Savers',
-              link: '/thorfi/savers',
-            },
-            {
-              name: 'Synths',
-              link: '/thorfi/synths',
-            },
-            {
-              name: 'Trade Assets',
-              link: '/thorfi/trades',
-            },
-            process.env.NETWORK === 'mainnet'
-              ? {
-                  name: 'Rune Pool',
-                  link: '/thorfi/runepool',
-                }
-              : false,
-          ],
-        },
+        // {
+        //   name: 'THORFi',
+        //   unicon: 'financeUnselected',
+        //   icon: 'financeSelected',
+        //   link: '/thorfi',
+        //   submenu: [
+        //     {
+        //       name: 'TCY',
+        //       link: '/thorfi/tcy',
+        //     },
+        //     {
+        //       name: 'Savers',
+        //       link: '/thorfi/savers',
+        //     },
+        //     {
+        //       name: 'Synths',
+        //       link: '/thorfi/synths',
+        //     },
+        //     {
+        //       name: 'Trade Assets',
+        //       link: '/thorfi/trades',
+        //     },
+        //     process.env.NETWORK === 'mainnet'
+        //       ? {
+        //           name: 'Rune Pool',
+        //           link: '/thorfi/runepool',
+        //         }
+        //       : false,
+        //   ],
+        // },
         {
           name: 'Vaults',
           unicon: 'shieldUnselected',
           icon: 'shieldSelected',
           link: '/vaults',
         },
-        {
-          name: 'Rujira',
-          unicon: 'chartUnselected',
-          icon: 'chartSelected',
-          link: '/rujira',
-          submenu: [
-            {
-              name: 'Secured Assets',
-              link: '/rujira/secured',
-            },
-            {
-              name: 'Contracts',
-              link: '/rujira/contracts',
-            },
-            process.env.NETWORK === 'mainnet'
-              ? {
-                  name: 'Merge',
-                  link: '/rujira/merge',
-                }
-              : false,
-            {
-              name: 'Tokens',
-              link: '/rujira/tokens',
-            },
-          ],
-        },
+        // {
+        //   name: 'Rujira',
+        //   unicon: 'chartUnselected',
+        //   icon: 'chartSelected',
+        //   link: '/rujira',
+        //   submenu: [
+        //     {
+        //       name: 'Secured Assets',
+        //       link: '/rujira/secured',
+        //     },
+        //     {
+        //       name: 'Contracts',
+        //       link: '/rujira/contracts',
+        //     },
+        //     process.env.NETWORK === 'mainnet'
+        //       ? {
+        //           name: 'Merge',
+        //           link: '/rujira/merge',
+        //         }
+        //       : false,
+        //     {
+        //       name: 'Tokens',
+        //       link: '/rujira/tokens',
+        //     },
+        //   ],
+        // },
         process.env.NETWORK === 'mainnet'
           ? {
               name: 'Insights',
@@ -355,10 +355,10 @@ export default {
                   name: 'Leaderboard',
                   link: '/insights/leaderboard',
                 },
-                {
-                  name: 'Burn',
-                  link: '/insights/burn',
-                },
+                // {
+                //   name: 'Burn',
+                //   link: '/insights/burn',
+                // },
                 {
                   name: 'Execution Quality',
                   link: '/insights/execution',
@@ -481,16 +481,8 @@ export default {
       font-family: 'Exo 2';
       font-size: $font-size-sm;
 
-      .logo {
-        width: 1.5rem;
-      }
-
       @include lg {
         font-size: $font-size-desktop;
-
-        .logo {
-          width: 1.75rem;
-        }
       }
     }
   }
