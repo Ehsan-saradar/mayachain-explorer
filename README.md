@@ -1,4 +1,4 @@
-# THORChain Explorer Interface
+# MayaChain Explorer Interface
 
 ## Usage
 
