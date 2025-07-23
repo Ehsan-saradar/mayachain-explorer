@@ -606,17 +606,15 @@ export function approxBlockSeconds(chain) {
 }
 
 const hashMapShorts = {
-  a: 'AVAX.AVAX',
+  a: 'ARB.ETH',
   b: 'BTC.BTC',
-  c: 'BCH.BCH',
-  n: 'BNB.BNB',
-  d: 'DOGE.DOGE',
-  s: 'BSC.BNB',
+  d: 'DASH.DASH',
   e: 'ETH.ETH',
-  g: 'GAIA.ATOM',
-  l: 'LTC.LTC',
+  k: 'KUJI.KUJI',
+  c: 'MAYA.CACAO',
   r: 'THOR.RUNE',
-  f: 'BASE.ETH',
+  x: 'XRD.XRD',
+  z: 'ZEC.ZEC',
 }
 
 export function shortAssetName(name) {
@@ -630,6 +628,17 @@ export function shortAssetName(name) {
 export function assetFromString(s) {
   if (typeof s === 'object') {
     return s
+  }
+
+  if (s.toUpperCase() === 'CACAO') {
+    return {
+      chain: 'MAYA',
+      symbol: 'CACAO',
+      ticker: 'CACAO',
+      synth: false,
+      trade: false,
+      secure: false,
+    }
   }
 
   if (s.toUpperCase() === 'TCY') {
@@ -762,10 +771,10 @@ export function assetFromString(s) {
       ? SECURE_DELIMITER
       : delimiter
   const data = s.split(delimiter)
+
   if (data.length <= 1 || data[1]?.length < 1) {
     return null
   }
-
   const chain = data[0]
   const symbol = data[1] + (data.length > 2 ? '-' + data[2] : '')
   const ticker = isSecure ? data[1] : symbol.split('-')[0]
