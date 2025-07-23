@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <card title="Affiliate Fees" :is-loading="loading">
+      <card title="Affiliate Fees" :is-loading="!affiliateChart">
         <VChart
           :key="affiliateChartKey"
           :option="affiliateChart"
@@ -81,6 +81,11 @@ export default {
       isFocused: false,
     }
   },
+  computed: {
+    loading() {
+      return !this.affiliateChart
+    },
+  },
   watch: {
     chartPeriod(newVal) {
       this.updateQuery({ period: newVal })
@@ -97,18 +102,18 @@ export default {
     affiliateInput(newVal) {
       if (newVal.trim() === '') {
         this.filters.affiliate = []
-        this.updateQuery({ thorname: undefined, period: undefined })
+        this.updateQuery({ mayaname: undefined, period: undefined })
         this.fetchAffiliateHistory()
       } else {
         this.filters.affiliate = [newVal.trim()]
-        this.updateQuery({ thorname: newVal.trim() })
+        this.updateQuery({ mayaname: newVal.trim() })
         this.fetchAffiliateHistory()
       }
     },
   },
   mounted() {
     const queryPeriod = this.$route.query.period
-    const queryThorname = this.$route.query.thorname
+    const queryThorname = this.$route.query.mayaname
 
     if (queryPeriod && this.chartPeriods.some((p) => p.mode === queryPeriod)) {
       this.chartPeriod = queryPeriod
@@ -125,7 +130,7 @@ export default {
     addAffiliate() {
       if (this.affiliateInput.trim() !== '') {
         this.filters.affiliate = [this.affiliateInput.trim()]
-        this.updateQuery({ thorname: this.affiliateInput.trim() })
+        this.updateQuery({ mayaname: this.affiliateInput.trim() })
         this.fetchAffiliateHistory()
       }
     },
@@ -137,7 +142,7 @@ export default {
     },
     formatAffiliateHistory(d) {
       const xAxis = []
-      const thornames = []
+      const Mayanames = []
       const others = []
 
       d?.intervals.forEach((interval, index) => {
@@ -150,21 +155,21 @@ export default {
         )
         xAxis.push(date.format('dddd, MMM D'))
 
-        const groupedThornames = interval.thornames.reduce((acc, thorname) => {
-          const key = ['t', 'tl', 'T'].includes(thorname.thorname)
+        const groupedThornames = interval.mayanames.reduce((acc, mayaname) => {
+          const key = ['t', 'tl', 'T'].includes(mayaname.mayaname)
             ? 't'
-            : ['ti', 'te', 'tr', 'td', 'tb'].includes(thorname.thorname)
+            : ['ti', 'te', 'tr', 'td', 'tb'].includes(mayaname.mayaname)
               ? 'ti'
-              : ['va', 'vi', 'v0'].includes(thorname.thorname)
+              : ['va', 'vi', 'v0'].includes(mayaname.mayaname)
                 ? 'va'
-                : thorname.thorname
+                : mayaname.mayaname
 
           if (acc[key]) {
-            acc[key].volumeUSD += +thorname.volumeUSD
+            acc[key].volumeUSD += +mayaname.volumeUSD
           } else {
             acc[key] = {
-              volumeUSD: +thorname.volumeUSD,
-              thorname: key,
+              volumeUSD: +mayaname.volumeUSD,
+              mayaname: key,
             }
           }
           return acc
@@ -180,32 +185,32 @@ export default {
         const otherThornames = sortedThornames.slice(5)
 
         let otherTotal = 0
-        otherThornames.forEach((thorname) => {
-          otherTotal += +thorname.volumeUSD / 1e2
+        otherThornames.forEach((mayaname) => {
+          otherTotal += +mayaname.volumeUSD / 1e2
         })
 
-        topThornames.forEach((thorname) => {
-          const thornameIndex = thornames.findIndex(
-            (t) => t.name === thorname.thorname
+        topThornames.forEach((mayaname) => {
+          const thornameIndex = Mayanames.findIndex(
+            (t) => t.name === mayaname.mayaname
           )
 
           if (thornameIndex >= 0) {
-            if (thornames[thornameIndex].data.length < index + 1) {
-              thornames[thornameIndex].data = this.fillArrayWithZero(
-                thornames[thornameIndex].data,
+            if (Mayanames[thornameIndex].data.length < index + 1) {
+              Mayanames[thornameIndex].data = this.fillArrayWithZero(
+                Mayanames[thornameIndex].data,
                 index
               )
             }
-            thornames[thornameIndex].data.push(+thorname.volumeUSD / 1e2)
+            Mayanames[thornameIndex].data.push(+mayaname.volumeUSD / 1e2)
           } else {
             let data = []
             if (index > 0) {
               data = this.fillArrayWithZero(data, index)
             }
-            data.push(+thorname.volumeUSD / 1e2)
-            thornames.push({
+            data.push(+mayaname.volumeUSD / 1e2)
+            Mayanames.push({
               type: 'bar',
-              name: thorname.thorname,
+              name: mayaname.mayaname,
               showSymbol: false,
               stack: 'Total',
               data,
@@ -229,7 +234,7 @@ export default {
       const foramtchart = this.basicChartFormat(
         (value) => `$ ${this.normalFormat(value, '0,0.00a')}`,
         [
-          ...thornames,
+          ...Mayanames,
           {
             type: 'bar',
             name: 'Others',
@@ -322,7 +327,7 @@ export default {
       }
 
       if (this.filters.affiliate.length > 0) {
-        params.thorname = this.filters.affiliate.join(',')
+        params.mayaname = this.filters.affiliate.join(',')
       }
 
       this.$api
@@ -337,13 +342,30 @@ export default {
         })
     },
     updateQuery(params) {
-      this.$router.replace({ query: { ...this.$route.query, ...params } })
+      const newQuery = { ...this.$route.query, ...params }
+
+      const currentQuery = this.$route.query
+
+      const isSame =
+        Object.keys(newQuery).every(
+          (key) => newQuery[key] === currentQuery[key]
+        ) &&
+        Object.keys(currentQuery).every(
+          (key) => newQuery[key] === currentQuery[key]
+        )
+
+      if (!isSame) {
+        this.$router.replace({ query: newQuery })
+      }
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+.echarts {
+  min-height: 400px;
+}
 .search-container {
   display: flex;
   flex-direction: column;
