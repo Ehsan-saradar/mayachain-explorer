@@ -151,7 +151,7 @@ export async function getLatestBlocks(latestBlock, count = 10) {
 }
 
 export function getRevThorname(address) {
-  return $axiosInstace.get(`thorname/rlookup/${address}`)
+  return $axiosInstace.get(`mayaname/rlookup/${address}`)
 }
 
 export function getMemberDetails(address) {
