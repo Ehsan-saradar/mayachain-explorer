@@ -146,7 +146,7 @@ export default {
             (res.data?.aliases?.length > 0 || res.data?.owner)
           ) {
             let thorchainAddr = res.data?.aliases?.find(
-              (el) => el.chain === 'THOR'
+              (el) => el.chain === 'MAYA'
             )?.address
             if (!thorchainAddr) {
               thorchainAddr = res.data.owner
