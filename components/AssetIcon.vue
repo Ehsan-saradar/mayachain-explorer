@@ -94,7 +94,6 @@ export default {
       if (asset === 'MAYA') {
         asset = 'MAYA.CACAO'
       }
-      console.log('Asset: ', asset)
 
       if (this.chain) {
         return true
