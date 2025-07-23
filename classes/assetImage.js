@@ -13,7 +13,6 @@ export const AssetImage = (assetStr) => {
   if (assetStr === 'MAYA') {
     assetStr = 'MAYA.MAYA'
   }
-  console.log('AssetImage', assetStr)
   const asset = assetFromString(assetStr)
   if (!asset) {
     return ''
