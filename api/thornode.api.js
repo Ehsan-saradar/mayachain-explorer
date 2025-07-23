@@ -267,7 +267,7 @@ export function getTxStatus(txid) {
 
 export function getThorname(name) {
   return $axiosInstace.get(
-    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/thorname/${name}`
+    endpoints[process.env.NETWORK].THORNODE_URL + `mayachain/mayaname/${name}`
   )
 }
 
