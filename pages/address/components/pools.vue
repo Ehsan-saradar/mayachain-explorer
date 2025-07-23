@@ -36,7 +36,7 @@
             )
           "
           >{{ props.row[props.column.field][0] | number('0,0.00') }}
-          <small>RUNE</small></span
+          <small>CACAO</small></span
         >
         <span
           v-if="props.row[props.column.field][1]"
@@ -89,21 +89,21 @@ export default {
           tdClass: 'mono',
         },
         {
-          label: 'Rune/Asset Redeem',
+          label: 'Cacao/Asset Redeem',
           field: 'poolShare',
           type: 'number',
           formatFn: this.numberFormat,
           tdClass: 'mono',
         },
         {
-          label: 'Rune/Asset Added',
+          label: 'Cacao/Asset Added',
           field: 'poolAdded',
           type: 'number',
           formatFn: this.numberFormat,
           tdClass: 'mono',
         },
         {
-          label: 'Rune/Asset Withdrawn',
+          label: 'Cacao/Asset Withdrawn',
           field: 'poolWithdrawn',
           type: 'number',
           formatFn: this.numberFormat,
@@ -165,11 +165,11 @@ export default {
       this.lps.push(
         ...saverPools.map((p) => ({
           ...p,
-          poolAdded: [undefined, p.assetDeposit / 1e8],
-          poolWithdrawn: [undefined, p.assetWithdrawn / 1e8],
+          poolAdded: [undefined, p.assetDeposit / 1e10],
+          poolWithdrawn: [undefined, p.assetWithdrawn / 1e10],
           dateFirstAdded: moment.unix(p.dateFirstAdded).fromNow(),
           share: this.getSaverShare(p),
-          poolShare: [undefined, p.assetRedeem / 1e8],
+          poolShare: [undefined, p.assetRedeem / 1e10],
           poolPrice: this.getPoolPrice(p),
           label: 'saver',
         }))

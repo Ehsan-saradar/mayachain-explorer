@@ -42,8 +42,8 @@
               :navs="[
                 { title: 'LP/Savers', value: 'pools' },
                 { title: 'Bond', value: 'bond' },
-                { title: 'Thorname', value: 'thorname' },
-                { title: 'TCY', value: 'distribution' },
+                { title: 'Mayaname', value: 'thorname' },
+                // { title: 'TCY', value: 'distribution' },
               ]"
               :is-loading="loading"
               :act-nav.sync="activeMode"
@@ -362,38 +362,40 @@ export default {
         this.nextPageToken = addrTxs.data.meta.nextPageToken
         this.prevPageToken = addrTxs.data.meta.prevPageToken
 
-        if (address.match(/^[st]?thor.*/gim)) {
+        if (address.match(/^[st]?maya.*/gim)) {
           const balances = (await this.$api.getBalance(address)).data.result
+
           const synthBalances =
             balances?.map((item) => {
-              if (item.denom === 'rune') {
+              if (item.denom === 'cacao') {
                 this.runeBalance = {
-                  asset: assetFromString('THOR.RUNE'),
-                  quantity: Number.parseFloat(item?.amount) / 10 ** 8 ?? 0,
+                  asset: assetFromString('MAYA.CACAO'),
+                  quantity: Number.parseFloat(item?.amount) / 10 ** 10 ?? 0,
                 }
                 return false
               }
 
               return {
                 asset: assetFromString(item.denom.toUpperCase()),
-                quantity: (item?.amount / 10 ** 8).toFixed(8),
+                quantity: (item?.amount / 10 ** 10).toFixed(8),
               }
             }) ?? []
 
           // if there is no balance show zero
           if (!balances) {
             this.runeBalance = {
-              asset: assetFromString('THOR.RUNE'),
+              asset: assetFromString('MAYA.CACAO'),
               quantity: 0,
             }
           }
 
-          let tradeBalances =
-            (await this.$api.getTradeAsset(address)).data ?? []
+          let tradeBalances = [{ asset: 'cacao', units: 0 }]
+          // (await this.$api.getTradeAsset(address)).data ?? []
+
           tradeBalances = tradeBalances.map((item) => {
             return {
               asset: assetFromString(item.asset),
-              quantity: (item?.units / 10 ** 8).toFixed(8),
+              quantity: (item?.units / 10 ** 10).toFixed(8),
             }
           })
 

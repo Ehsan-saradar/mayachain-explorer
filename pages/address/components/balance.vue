@@ -4,11 +4,11 @@
       <div class="balance-container">
         <span class="title-balance">Balances</span>
         <div class="balance-label">
-          <span>RUNE Balance</span>
+          <span>CACAO Balance</span>
           <skeleton-item :loading="loading" class="balance-content">
             <asset-icon
               v-if="runeToken && runeToken.price > 0 && !isNaN(runeToken.price)"
-              :asset="{ ticker: 'RUNE', chain: 'THOR' }"
+              :asset="{ ticker: 'CACAO', chain: 'MAYA' }"
               :height="'16px'"
               :chain="false"
             />
@@ -16,23 +16,23 @@
               v-if="runeToken && runeToken.price > 0 && !isNaN(runeToken.price)"
               class="mono"
             >
-              {{ balanceFormat(runeToken.quantity) }} RUNE
+              {{ balanceFormat(runeToken.quantity) }} CACAO
             </span>
             <span v-else>-</span>
           </skeleton-item>
         </div>
 
-        <div class="balance-label">
+        <!-- <div class="balance-label">
           <span>{{ isNodeAddress ? 'Bonded Value' : 'Bond Balance' }}</span>
           <skeleton-item :loading="loading || !nodes" class="balance-content">
             <asset-icon
-              :asset="{ ticker: 'RUNE', chain: 'THOR' }"
+              :asset="{ ticker: 'CACAO', chain: 'MAYA' }"
               :height="'16px'"
               :chain="false"
             />
             <div class="bonds">
               <span v-if="totalBond !== undefined" class="mono">
-                {{ balanceFormat(totalBond / 1e8) }} RUNE
+                {{ balanceFormat(totalBond / 1e10) }} CACAO
                 <nuxt-link
                   v-if="isNodeAddress"
                   :to="'/node/' + address"
@@ -42,12 +42,12 @@
                 </nuxt-link>
               </span>
               <span v-else-if="bonds && bonds.total !== undefined" class="mono">
-                {{ balanceFormat(bonds.total) }} RUNE
+                {{ balanceFormat(bonds.total) }} CACAO
               </span>
               <span v-else class="mono">-</span>
             </div>
           </skeleton-item>
-        </div>
+        </div> -->
 
         <div class="balance-label">
           <span>Total Value</span>
@@ -246,7 +246,6 @@ export default {
       if (!this.state) {
         return []
       }
-
       const ret = []
       for (let i = 0; i < this.state.length; i++) {
         const e = this.state[i]
@@ -258,7 +257,7 @@ export default {
           }
         })
 
-        if (e.asset?.ticker === 'RUNE' && e.asset?.chain === 'THOR') {
+        if (e.asset?.ticker === 'CACAO' && e.asset?.chain === 'MAYA') {
           poolAsset = {
             assetPriceUSD: this.runePrice,
           }
@@ -276,15 +275,15 @@ export default {
       return ret
     },
     runeToken() {
-      return this.tokenRows.find(
+      return this.tokenRows?.find(
         (token) =>
-          token?.asset?.ticker === 'RUNE' && token?.asset?.chain === 'THOR'
+          token?.asset?.ticker === 'CACAO' && token?.asset?.chain === 'MAYA'
       )
     },
     otherTokens() {
-      return this.tokenRows.filter(
+      return this.tokenRows?.filter(
         (token) =>
-          !(token.asset?.ticker === 'RUNE' && token.asset?.chain === 'THOR')
+          !(token.asset?.ticker === 'CACAO' && token.asset?.chain === 'MAYA')
       )
     },
     groupedTokens() {

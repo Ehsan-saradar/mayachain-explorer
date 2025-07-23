@@ -33,7 +33,7 @@
           </nuxt-link>
         </template>
       </info-card>
-      <span v-if="thornames.length == 0"> NO THORName </span>
+      <span v-if="thornames.length == 0"> NO MAYAName </span>
     </template>
   </div>
 </template>
@@ -82,9 +82,9 @@ export default {
               },
               {
                 name: 'Affiliate Collector',
-                value: res.data?.affiliate_collector_rune,
+                value: res.data?.affiliate_collector_cacao,
                 filter: (v) =>
-                  `${this.$options.filters.number(v / 1e8, '0,0')} RUNE`,
+                  `${this.$options.filters.number(v / 1e10, '0,0')} CACAO`,
               },
               {
                 name: 'Preferred Asset',
