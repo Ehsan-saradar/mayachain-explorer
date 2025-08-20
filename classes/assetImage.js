@@ -159,6 +159,8 @@ export const AssetImage = (assetStr) => {
             iconPath = 'https://etherscan.io/token/images/lends_32.png'
           } else if (ticker === 'WSTETH') {
             iconPath = require('~/assets/images/assets/wsteth.png')
+          } else if (ticker === 'LLD') {
+            iconPath = require('~/assets/images/assets/lld.svg')
           }
         }
         break
