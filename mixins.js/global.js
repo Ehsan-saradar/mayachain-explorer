@@ -64,7 +64,7 @@ export default {
       const { chain, synth, trade, secure } = assetFromString(assetStr)
       let asset = `${chain}.${chain}`
       if (synth || trade || secure) {
-        return 'THOR.RUNE'
+        return 'MAYA.CACAO'
       }
       switch (chain) {
         case 'GAIA':
