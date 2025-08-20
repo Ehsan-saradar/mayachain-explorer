@@ -519,7 +519,7 @@ export default {
                 key: liquidityFeeName,
                 value: `${
                   totalLiquidityFees / 1e8
-                } RUNE (${this.formatSmallCurrency(
+                } CACAO (${this.formatSmallCurrency(
                   totalLiquidityFees * this.runePrice
                 )})`,
                 is: accordions.action.liquidityFee,
@@ -533,7 +533,7 @@ export default {
                 key: 'Interface Fee',
                 value: `${
                   affiliateOutAmount / 1e8
-                } RUNE (${this.formatSmallCurrency(
+                } CACAO (${this.formatSmallCurrency(
                   affiliateOutAmount * this.runePrice
                 )})`,
                 is:
@@ -2213,13 +2213,14 @@ export default {
       )
 
       const inAmountUSD =
-        (+swapAction?.metadata.swap.inPriceUSD * inAmount) / 1e8
+        (+swapAction?.metadata.swap.inPriceUSD * inAmount) / 1e10
       let outAmountUSD =
         (+swapAction?.metadata.swap.outPriceUSD *
           (outAmount || +this.quote?.expected_amount_out)) /
-        1e8
+        1e10
       if (!outboundHasSuccess && outboundHasRefund) {
-        outAmountUSD = (+swapAction?.metadata.swap.inPriceUSD * outAmount) / 1e8
+        outAmountUSD =
+          (+swapAction?.metadata.swap.inPriceUSD * outAmount) / 1e10
       }
 
       const outboundRefundReason = actions?.actions.find(
@@ -2285,10 +2286,12 @@ export default {
                 ? undefined
                 : (v) => `~ ${this.baseAmountFormatOrZero(v)}`,
             },
-            ...outTxs?.slice(1).map((o) => ({
-              asset: this.parseMemoAsset(o.coins[0].asset, this.pools),
-              amount: parseInt(o.coins[0].amount),
-            })),
+            ...(outTxs
+              ? outTxs.slice(1).map((o) => ({
+                  asset: this.parseMemoAsset(o.coins[0].asset, this.pools),
+                  amount: parseInt(o.coins[0].amount),
+                }))
+              : []),
           ],
         },
         accordions: {
@@ -2388,24 +2391,26 @@ export default {
                   outAsset.secure) &&
                 (thorStatus?.stages.outbound_delay?.completed ?? true),
             },
-            ...outTxs?.slice(1).map((o) => ({
-              txid: o.id,
-              to: o.to_address,
-              asset: this.parseMemoAsset(o.coins[0].asset, this.pools),
-              amount: parseInt(o.coins[0].amount),
-              gas: o.gas ? o.gas[0].amount : null,
-              height: o.height,
-              gasAsset: o.gas
-                ? this.parseMemoAsset(o.gas[0].asset, this.pools)
-                : null,
-              done:
-                !thorStatus?.stages.swap_status?.pending &&
-                (thorStatus?.stages.outbound_signed?.completed ||
-                  outAsset.chain === 'THOR' ||
-                  outAsset.synth ||
-                  outAsset.trade ||
-                  outAsset.secure),
-            })),
+            ...(outTxs
+              ? outTxs.slice(1).map((o) => ({
+                  txid: o.id,
+                  to: o.to_address,
+                  asset: this.parseMemoAsset(o.coins[0].asset, this.pools),
+                  amount: parseInt(o.coins[0].amount),
+                  gas: o.gas ? o.gas[0].amount : null,
+                  height: o.height,
+                  gasAsset: o.gas
+                    ? this.parseMemoAsset(o.gas[0].asset, this.pools)
+                    : null,
+                  done:
+                    !thorStatus?.stages.swap_status?.pending &&
+                    (thorStatus?.stages.outbound_signed?.completed ||
+                      outAsset.chain === 'THOR' ||
+                      outAsset.synth ||
+                      outAsset.trade ||
+                      outAsset.secure),
+                }))
+              : []),
           ],
         },
       }
