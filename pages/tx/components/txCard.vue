@@ -49,11 +49,21 @@
                     {{
                       (o.amount || o.amount === 0) && !isNaN(o.amount)
                         ? o.filter
-                          ? o.filter(o.amount)
-                          : baseAmountFormatOrZero(o.amount)
+                          ? o.filter(
+                              o.asset.chain === 'MAYA' ||
+                                o.asset === 'MAYA.CACAO'
+                                ? o.amount / 100
+                                : o.amount
+                            )
+                          : baseAmountFormatOrZero(
+                              o.asset.chain === 'MAYA' ||
+                                o.asset === 'MAYA.CACAO'
+                                ? o.amount / 100
+                                : o.amount
+                            )
                         : '...'
-                    }}</span
-                  >
+                    }}
+                  </span>
                   <small class="mono sec-color">{{ showAsset(o.asset) }}</small>
                 </div>
                 <small v-if="o.amountUSD">{{
@@ -104,13 +114,25 @@
               </template>
               <template v-else>
                 <div class="amount-info">
-                  <span class="mono sec-color">{{
-                    o.amount
-                      ? o.filter
-                        ? o.filter(o.amount)
-                        : baseAmountFormatOrZero(o.amount)
-                      : '...'
-                  }}</span>
+                  <span class="mono sec-color">
+                    {{
+                      o.amount
+                        ? o.filter
+                          ? o.filter(
+                              o.asset.chain === 'MAYA' ||
+                                o.asset === 'MAYA.CACAO'
+                                ? o.amount / 100
+                                : o.amount
+                            )
+                          : baseAmountFormatOrZero(
+                              o.asset.chain === 'MAYA' ||
+                                o.asset === 'MAYA.CACAO'
+                                ? o.amount / 100
+                                : o.amount
+                            )
+                        : '...'
+                    }}
+                  </span>
                   <small class="mono sec-color">{{ showAsset(o.asset) }}</small>
                 </div>
                 <small v-if="o.amountUSD">{{
