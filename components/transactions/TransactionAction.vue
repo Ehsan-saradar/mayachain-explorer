@@ -11,7 +11,10 @@
           :chain-height="'0.8rem'"
         />
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </span>
       <right-arrow class="action-type" />
@@ -26,7 +29,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </span>
       <span
@@ -51,6 +57,7 @@
         </div>
       </template>
     </div>
+
     <div
       v-else-if="row && (type === 'withdraw' || type === 'runePoolWithdraw')"
       :class="['action-cell', { 'no-border': noBorder, wrap: wrap }]"
@@ -80,7 +87,12 @@
             :chain-height="'0.8rem'"
           ></asset-icon>
           <span class="asset-name">
-            {{ decimalFormat(ops.coins[0].amount / 1e8) }}
+            {{
+              decimalFormat(
+                ops.coins[0].amount /
+                  (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+              )
+            }}
           </span>
         </span>
         <div
@@ -91,6 +103,7 @@
         </div>
       </template>
     </div>
+
     <div
       v-else-if="row && (type === 'addLiquidity' || type === 'runePoolDeposit')"
       :class="['action-cell', { 'no-border': noBorder, wrap: wrap }]"
@@ -103,7 +116,10 @@
             :chain-height="'0.8rem'"
           ></asset-icon>
           <span class="asset-name">{{
-            decimalFormat(ops.coins[0].amount / 1e8)
+            decimalFormat(
+              ops.coins[0].amount /
+                (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+            )
           }}</span>
         </span>
         <div
@@ -151,7 +167,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </span>
     </div>
@@ -174,7 +193,10 @@
             :chain-height="'0.8rem'"
           />
           <span class="asset-name">{{
-            decimalFormat(+ops.coins[0].amount / 1e8)
+            decimalFormat(
+              +ops.coins[0].amount /
+                (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+            )
           }}</span>
         </template>
         <template v-else>
@@ -207,7 +229,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </div>
     </div>
@@ -224,7 +249,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </div>
     </div>
@@ -241,7 +269,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </div>
     </div>
@@ -258,7 +289,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </span>
       <right-arrow class="action-type" />
@@ -294,7 +328,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </div>
     </div>
@@ -310,7 +347,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </span>
       <right-arrow class="action-type" />
@@ -325,7 +365,10 @@
           :chain-height="'0.8rem'"
         ></asset-icon>
         <span class="asset-name">{{
-          decimalFormat(ops.coins[0].amount / 1e8)
+          decimalFormat(
+            ops.coins[0].amount /
+              (ops.coins[0].asset === 'MAYA.CACAO' ? 1e10 : 1e8)
+          )
         }}</span>
       </span>
     </div>
@@ -381,6 +424,7 @@
         "
       >
         <div class="asset-cell">
+          {{ row.metadata.contract.attributes }}
           <asset-icon
             :height="'1.2rem'"
             :asset="parseCosmosAsset(row.metadata.contract.funds)"
