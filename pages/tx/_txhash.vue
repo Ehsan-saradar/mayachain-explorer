@@ -2218,6 +2218,7 @@ export default {
         (+swapAction?.metadata.swap.outPriceUSD *
           (outAmount || +this.quote?.expected_amount_out)) /
         1e10
+
       if (!outboundHasSuccess && outboundHasRefund) {
         outAmountUSD =
           (+swapAction?.metadata.swap.inPriceUSD * outAmount) / 1e10
